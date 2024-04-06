@@ -11,10 +11,17 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "../headers/arr.hpp"
 
 /*
  *
  */
 TEST(arrTest, first_test)
 {
+
+    arr::darr1 xV(3);
+    int i = 0;
+    for (auto &x: xV)
+        x=++i;
+
 }

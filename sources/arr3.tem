@@ -3,8 +3,8 @@
 #include <cstdlib>
 #include <math.h>
 #include <iostream>
-#include "arr.hpp"
 
+namespace arr {
 //
 template <class data_type>
 arr3<data_type>::arr3(const std::size_t n0,
@@ -159,3 +159,4 @@ std::vector<data_type> arr3<data_type>::vect()
                 v.at(i * m_n1 * m_n2 + j * m_n2 + k) = at(i, j, k);
     return v;
 }
+} // namespace arr

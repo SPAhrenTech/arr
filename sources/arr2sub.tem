@@ -4,8 +4,6 @@
 #include <math.h>
 #include <iostream>
 
-#include "arr.hpp"
-
 namespace arr {
 //
     template<class data_type>
