@@ -6,6 +6,8 @@
 // #include "cpx.hpp"
 
 #include "arr.hpp"
+#include "mth.hpp"
+#include "trg.hpp"
 
 namespace arr {
 

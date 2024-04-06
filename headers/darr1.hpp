@@ -6,6 +6,7 @@
 #include <iostream>
 
 namespace arr {
+
 #ifndef _ARR1_
 #include "arr1.hpp"
 #endif

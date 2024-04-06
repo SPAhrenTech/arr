@@ -1,23 +1,25 @@
 # Main library
 set(library_sources
-        arr.cpp
-        arr1.tem
-        arr2.tem
-        arr2slice.tem
-        arr2sub.tem
-        arr3.tem
-        barr1.cpp
-        barr2.cpp
-        barr2slice.cpp
-        barr2sub.cpp
-        barr3.cpp
-        darr1.cpp
-        darr2.cpp
-        darr2slice.cpp
-        darr2sub.cpp
-        uiarr1.cpp
-        uiarr2.cpp
-        )
+	mth.cpp
+	trg.cpp
+	arr.cpp
+	arr1.tem
+	arr2.tem
+	arr2slice.tem
+	arr2sub.tem
+	arr3.tem
+	barr1.cpp
+	barr2.cpp
+	barr2slice.cpp
+	barr2sub.cpp
+	barr3.cpp
+	darr1.cpp
+	darr2.cpp
+	darr2slice.cpp
+	darr2sub.cpp
+	uiarr1.cpp
+	uiarr2.cpp
+	)
 
 option(${PROJECT_NAME}_STATIC_LIB "Make ${PROJECT_NAME} a static library" ON)
 

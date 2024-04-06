@@ -4,6 +4,8 @@
 #include <math.h>
 
 #include "arr.hpp"
+#include "mth.hpp"
+#include "trg.hpp"
 
 namespace arr {
 

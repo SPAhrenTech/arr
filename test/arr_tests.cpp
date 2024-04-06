@@ -8,10 +8,11 @@
 #include <filesystem>
 
 // vendor
-#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "../headers/arr.hpp"
+#include "../headers/mth.hpp"
+#include "../headers/trg.hpp"
 
 /*
  *
@@ -19,9 +20,30 @@
 TEST(arrTest, first_test)
 {
 
-    arr::darr1 xV(3);
-    int i = 0;
-    for (auto &x: xV)
-        x=++i;
+	arr::darr2 M=arr::darr2::zero(5,6);
+	for(std::size_t i=0;i<M.size(0);++i)
+		for(std::size_t j=0;j<M.size(1);++j)
+			M(i,j)=mth::rndom();
+	
+	//cout<<M.rowEschelon()<<"\n";
+	
+	arr::darr2 V;
+	arr::darr2 S=(M*M.T()).diagSymm(V);
+	
+	EXPECT_EQ(S(1,2), 0.) << "not symmetric";
+	//M(1,0,1,3)=0.;
+	//cout<<M<<"\n";
+	/*
+	for(size_t i=0;i<M.size(0);i++)
+	{
+		M.row(i)=i;
+		darr1 C=M.row(i);
+
+		std::cout<<"M:\n"<<M<<"\n";
+		std::cout<<"C:\n"<<C<<"\n";
+	}
+	
+	cout<<M.icol();
+	*/
 
 }

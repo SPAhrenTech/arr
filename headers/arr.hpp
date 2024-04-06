@@ -12,8 +12,6 @@ void clear_arr_err();
 
 } // namespace arr
 
-#include "mth.hpp"
-#include "trg.hpp"
 #include "arr1.hpp"
 #include "arr2.hpp"
 #include "arr3.hpp"
