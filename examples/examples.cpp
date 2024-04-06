@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "arr.hpp"
-#include "../tlbx/mth.hpp"
+#include "mth.hpp"
 
 namespace examples {
 

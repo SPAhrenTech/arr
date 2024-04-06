@@ -5,7 +5,7 @@ set(example_sources
         )
 		
 add_executable(examples ${example_sources})
-target_include_directories(examples PRIVATE "${PROJECT_SOURCE_DIR}/src/headers" "${PROJECT_SOURCE_DIR}/src/tlbx")
+target_include_directories(examples PRIVATE "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/src/headers" "${PROJECT_SOURCE_DIR}/src/tlbx")
 target_link_libraries(examples PUBLIC ${PROJECT_NAME})
 
 target_compile_features(examples PRIVATE cxx_std_17)
