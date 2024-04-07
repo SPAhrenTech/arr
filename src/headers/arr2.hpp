@@ -21,7 +21,7 @@ template <class data_type>
 class arr2 {
   private:
   protected:
-    data_type* m_a;
+    std::unique_ptr<data_type[]> m_a;
     std::size_t m_nRows, m_nCols;
 
   public:
@@ -40,7 +40,7 @@ class arr2 {
 
     arr2<data_type>& operator=(const arr2<data_type>& A);
 
-    data_type* source() const { return m_a; }
+    data_type* source() const { return m_a.get(); }
 
     std::vector<data_type> vect();
 

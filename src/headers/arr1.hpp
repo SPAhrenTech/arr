@@ -17,14 +17,14 @@ template <class data_type>
 class arr1 {
   private:
   protected:
-    data_type* m_a;
+    std::unique_ptr<data_type[]> m_a;
     std::size_t m_n;
 
   public:
     arr1(const std::size_t n = 0, const data_type* a = NULL);
 
     arr1(const arr1<data_type>& A); // copy constructor
-    arr1(const std::vector<data_type>& A) : arr1(A.size(), A.data()) {}
+    arr1(const std::vector<data_type>& A) : arr1(A.size(), A.source()) {}
 
     arr1(const arr2slice<data_type>& A);
 
@@ -40,7 +40,7 @@ class arr1 {
 
     ~arr1();
 
-    data_type* source() const { return m_a; }
+    data_type* source() const { return m_a.get(); }
 
     std::vector<data_type> vect();
 
