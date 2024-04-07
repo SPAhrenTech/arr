@@ -37,6 +37,36 @@ arr2<data_type>::arr2(const arr2<data_type>& A) : arr2(A.size(0), A.size(1))
             m_a[i * m_nCols + j] = A(i, j);
 }
 
+template <class data_type>
+arr2<data_type>::arr2(std::initializer_list<std::initializer_list<data_type>> A)
+{
+	m_nRows = m_nCols = 0;
+	bool first = true;
+	for(auto &aRow:A)
+	{
+		if (first)
+	 		m_nCols = aRow.size();
+		if(aRow.size() < m_nCols)
+			m_nCols = aRow.size();
+		++m_nRows;
+	}
+	m_a = std::unique_ptr<data_type[]>(new data_type[size()]);
+	if (m_a != nullptr) {
+		std::size_t i = 0;
+		for(auto &aRow:A)
+		{
+			std::size_t j = 0;
+			for(auto &a:aRow)
+			{
+				if (j < m_nCols)
+					m_a[i * m_nCols + j] = a;
+				++j;
+			}
+			++i;
+		}
+	}
+}
+
 //
 template <class data_type>
 arr2<data_type>::~arr2()

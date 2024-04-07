@@ -14,6 +14,12 @@ namespace examples {
 
 void doThing(){
 
+	arr::darr1 d1({1,2,3});
+	std::cout<<d1<<"\n";
+
+	arr::darr2 d2({{4,5,6},{1,2,3}});
+	std::cout<<d2<<"\n";
+	
 	arr::darr2 M=arr::darr2::zero(5,6);
 	for(std::size_t i=0;i<M.size(0);++i)
 		for(std::size_t j=0;j<M.size(1);++j)

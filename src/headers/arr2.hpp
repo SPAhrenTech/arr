@@ -28,6 +28,7 @@ class arr2 {
     arr2(const std::size_t nRows = 0, const std::size_t nCols = 0, const data_type* a = NULL);
 
     arr2(const arr1<data_type>& A);
+   	arr2(std::initializer_list<std::initializer_list<data_type>> A);
 
     arr2(const arr2<data_type>& A); // copy constructor
     arr2(const arr2slice<data_type>& A);

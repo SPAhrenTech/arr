@@ -24,8 +24,8 @@ class arr1 {
     arr1(const std::size_t n = 0, const data_type* a = NULL);
 
     arr1(const arr1<data_type>& A); // copy constructor
-    arr1(const std::vector<data_type>& A) : arr1(A.size(), A.source()) {}
-
+    arr1(const std::vector<data_type>& A) : arr1(A.size(), A.data()) {}
+		arr1(std::initializer_list<data_type> A):arr1(std::vector(A)){}
     arr1(const arr2slice<data_type>& A);
 
     arr1 operator=(const data_type& x);
