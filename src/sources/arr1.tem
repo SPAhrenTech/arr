@@ -122,7 +122,7 @@ template <class data_type>
 data_type& arr1<data_type>::at(const std::size_t i)
 {
     if (i >= size())
-        arr_err = 1;
+        err = 1;
     return m_a[i];
 }
 
@@ -131,7 +131,7 @@ template <class data_type>
 data_type const& arr1<data_type>::at(const std::size_t i) const
 {
     if (i >= size())
-        arr_err = 1;
+        err = 1;
     return m_a[i];
 }
 

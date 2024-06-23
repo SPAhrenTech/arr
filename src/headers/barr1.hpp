@@ -20,7 +20,7 @@ private:
 public:
 	barr1(const std::size_t N0 = 0, const bool *a = NULL) : bool_arr1(N0, a) {}
 
-	barr1(const bool_arr1 &A) : bool_arr1(A.size(), A.source()) {}
+	barr1(const bool_arr1 &A) : bool_arr1(A.size(), A.data()) {}
 
 	barr1(const barr2slice &A);
 

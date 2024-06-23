@@ -8,16 +8,12 @@
 
 namespace trg {
 
-const double Pi(4.*atan(1.));
-const double degtorad(180./Pi);
+inline const double Pi(4.*atan(1.));
+inline const double degtorad(180./Pi);
 
 //trg
-double asincos(double s, double c);
-double asintan(double s, double t);
-double acossin(double c, double s);
-double acostan(double c, double t);
-double atansin(double t, double s);
-double atancos(double t, double c);
+inline double asincos(double s, double c){return atan2(s,c);}
+inline double acossin(double c, double s){return atan2(s,c);}
 
 //special function(s)
 double sinc(double x);

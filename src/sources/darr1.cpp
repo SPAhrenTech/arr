@@ -46,7 +46,7 @@ double darr1::dot(const darr1& A) const
 {
     double res = 0;
     if (size() != A.size()) {
-        arr_err = -1;
+        err = -1;
         return res;
     }
     for (size_t i = 0; i < size(); ++i)

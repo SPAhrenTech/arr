@@ -21,7 +21,7 @@ namespace arr {
     public:
         darr2slice(darr2 *A, const std::size_t iDim, const std::size_t iIndex) : double_arr2slice(A, iDim, iIndex) {}
 
-        darr2slice(const double_arr2slice &A) : double_arr2slice(A.source(), A.dim(), A.index()) {}
+        darr2slice(const double_arr2slice &A) : double_arr2slice(A.data(), A.dim(), A.index()) {}
 
         darr2 operator+() const;
 

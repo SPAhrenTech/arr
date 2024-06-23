@@ -22,7 +22,7 @@ namespace arr {
         barr2sub(barr2 *A, const std::size_t iRow, const std::size_t iCol, const std::size_t nRows,
                  const std::size_t nCols) : bool_arr2sub(A, iRow, iCol, nRows, nCols) {}
 
-        barr2sub(const bool_arr2sub &A) : bool_arr2sub(A.source(), A.index(0), A.index(1), A.size(0), A.size(1)) {}
+        barr2sub(const bool_arr2sub &A) : bool_arr2sub(A.data(), A.index(0), A.index(1), A.size(0), A.size(1)) {}
 
         barr2 operator|(const barr2sub &A) const;
 

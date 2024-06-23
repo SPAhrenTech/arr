@@ -22,7 +22,7 @@ namespace arr {
         darr2sub(darr2 *A, const std::size_t iRow, const std::size_t iCol, const std::size_t nRows,
                  const std::size_t nCols) : double_arr2sub(A, iRow, iCol, nRows, nCols) {}
 
-        darr2sub(const double_arr2sub &A) : double_arr2sub(A.source(), A.index(0), A.index(1), A.size(0), A.size(1)) {}
+        darr2sub(const double_arr2sub &A) : double_arr2sub(A.data(), A.index(0), A.index(1), A.size(0), A.size(1)) {}
 
         darr2 operator+() const;
 

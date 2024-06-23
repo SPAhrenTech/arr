@@ -6,9 +6,9 @@
 #include <iostream>
 
 namespace arr {
-extern int arr_err;
-int check_arr_err();
-void clear_arr_err();
+extern int err;
+int check_err();
+void clear_err();
 
 } // namespace arr
 

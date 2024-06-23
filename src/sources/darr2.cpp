@@ -101,17 +101,17 @@ darr2 darr2::inv() const
     size_t m = size(0), n = size(1);
     darr2 res = ident(m, n);
     if (!isSquare()) {
-        arr_err = -1;
+        err = -1;
         return res;
     }
     double d = det();
     if (d == 0.) {
-        arr_err = -1;
+        err = -1;
         return res;
     }
     darr2 P, L, U;
     if (!PLU(P, L, U)) {
-        arr_err = -1;
+        err = -1;
         return res;
     }
 
@@ -397,7 +397,7 @@ bool darr2::PLU(darr2& P, darr2& L, darr2& U) const
 double darr2::det() const
 {
     if (!isSquare()) {
-        arr_err = 1;
+        err = 1;
         return 0;
     }
     bool isSingular = false;
@@ -666,7 +666,7 @@ bool darr2::diagSymm(darr2& s, darr2& V) const
                 A.swapCols(ip, iq);
             }
     if (!res)
-        arr_err = 1;
+        err = 1;
     s = sv.diag();
     return res;
 }
@@ -677,7 +677,7 @@ darr2 darr2::diagSymm(darr2& v) const
     darr2 s;
     bool res = diagSymm(s, v);
     if (!res) {
-        arr_err = -1;
+        err = -1;
         s = *this;
     }
     return s;
@@ -740,7 +740,7 @@ bool darr2::SVD(darr2& U, darr2& S, darr2& V) const
             }
 
     if (!res)
-        arr_err = 1;
+        err = 1;
     return res;
 }
 

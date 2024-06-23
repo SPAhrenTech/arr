@@ -173,7 +173,7 @@ template <class data_type>
 data_type& arr2<data_type>::at(const std::size_t i, const std::size_t j)
 {
     if (!((i < m_nRows) && (j < m_nCols)))
-        arr_err = 1;
+        err = 1;
     return m_a[i * m_nCols + j];
 }
 
@@ -182,7 +182,7 @@ template <class data_type>
 data_type const& arr2<data_type>::at(const std::size_t i, const std::size_t j) const
 {
     if (!((i < m_nRows) && (j < m_nCols)))
-        arr_err = 1;
+        err = 1;
     return m_a[i * m_nCols + j];
 }
 
@@ -193,7 +193,7 @@ arr1<data_type> arr2<data_type>::operator()(const std::size_t j) const
     std::size_t nRows = m_nRows;
     arr1<data_type> res(nRows);
     if (j > m_nCols) {
-        arr_err = -1;
+        err = -1;
         return res;
     }
     for (std::size_t i = 0; i < nRows; i++)

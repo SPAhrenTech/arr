@@ -134,7 +134,7 @@ template <class data_type>
 data_type& arr3<data_type>::at(const std::size_t i, const std::size_t j, const std::size_t k)
 {
     if (!((i < m_n0) && (j < m_n1) && (k < m_n2)))
-        arr_err = 1;
+        err = 1;
     return m_a[i * m_n1 * m_n2 + j * m_n2 + k];
 }
 
@@ -144,7 +144,7 @@ data_type const&
 arr3<data_type>::at(const std::size_t i, const std::size_t j, const std::size_t k) const
 {
     if (!((i < m_n0) && (j < m_n1) && (k < m_n2)))
-        arr_err = 1;
+        err = 1;
     return m_a[i * m_n1 * m_n2 + j * m_n2 + k];
 }
 

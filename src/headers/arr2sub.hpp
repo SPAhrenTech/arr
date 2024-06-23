@@ -33,7 +33,7 @@ namespace arr {
 
         ~arr2sub();
 
-        arr2<data_type> *source() const { return m_a; }
+        arr2<data_type> *data() const { return m_a; }
 
         std::size_t index(const std::size_t i) const { return (i == 0) ? m_iRow : m_iCol; }
 
