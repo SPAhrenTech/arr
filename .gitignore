@@ -35,3 +35,6 @@ builds/
 *.exe
 *.out
 *.app
+arr.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+arr.xcodeproj/project.xcworkspace/xcuserdata/phil3.xcuserdatad/UserInterfaceState.xcuserstate
+tlbx/
