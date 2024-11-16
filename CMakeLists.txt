@@ -20,6 +20,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE tlbx)
 message(STATUS "project ${CMAKE_PROJECT_NAME}")
 if(${CMAKE_PROJECT_NAME} STREQUAL "arr")
     add_subdirectory(tlbx)
+    add_subdirectory(examples)
 endif()
-
-add_subdirectory(examples)
