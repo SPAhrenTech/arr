@@ -16,6 +16,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE tlbx)
 
-add_subdirectory(tlbx)
+# submodules
+message(STATUS "project ${CMAKE_PROJECT_NAME}")
+if(${CMAKE_PROJECT_NAME} STREQUAL "arr")
+    add_subdirectory(tlbx)
+endif()
 
 add_subdirectory(examples)
