@@ -8,7 +8,13 @@ set(cpp_srcs ${PROJECT_NAME}.hpp ${cpp_headers} ${cpp_sources})
 add_library(${PROJECT_NAME} STATIC ${cpp_srcs})
         
 # Enable include with <> pair
-target_include_directories(${PROJECT_NAME} PUBLIC . headers tlbx tlbx/headers)
+if(${CMAKE_PROJECT_NAME} STREQUAL "arr")
+    target_include_directories(${PROJECT_NAME} PUBLIC . headers tlbx tlbx/headers)
+else()
+    target_include_directories(${PROJECT_NAME} PUBLIC
+        ${CMAKE_SOURCE_DIR}/arr ${CMAKE_SOURCE_DIR}/arr/headers
+        ${CMAKE_SOURCE_DIR}/tlbx ${CMAKE_SOURCE_DIR}/tlbx/headers)
+endif()
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
