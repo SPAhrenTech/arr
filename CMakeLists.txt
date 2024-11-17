@@ -8,13 +8,13 @@ set(cpp_srcs ${PROJECT_NAME}.hpp ${cpp_headers} ${cpp_sources})
 add_library(${PROJECT_NAME} STATIC ${cpp_srcs})
         
 if(${CMAKE_PROJECT_NAME} STREQUAL "arr")
-    set(modules_dir ".")
+    set(modules_dir "")
 else()
-    set(modules_dir "${CMAKE_SOURCE_DIR}")
+    set(modules_dir "${CMAKE_SOURCE_DIR}/")
 endif()
 target_include_directories(${PROJECT_NAME} PUBLIC
     . headers
-    ${modules_dir}/tlbx ${modules_dir}/tlbx/headers)
+    ${modules_dir}tlbx ${modules_dir}tlbx/headers)
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
