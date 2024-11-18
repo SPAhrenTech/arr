@@ -7,13 +7,13 @@ set(cpp_srcs ${PROJECT_NAME}.hpp ${cpp_headers} ${cpp_sources})
 
 add_library(${PROJECT_NAME} STATIC ${cpp_srcs})
         
-if(${CMAKE_PROJECT_NAME} STREQUAL "arr")
+if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
     set(modules_dir "")
 else()
     set(modules_dir "${CMAKE_SOURCE_DIR}/")
 endif()
 target_include_directories(${PROJECT_NAME} PUBLIC
-    . headers
+    ${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/headers
     ${modules_dir}tlbx ${modules_dir}tlbx/headers)
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
@@ -24,7 +24,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE tlbx)
 
 # submodules
 message(STATUS "project ${CMAKE_PROJECT_NAME}")
-if(${CMAKE_PROJECT_NAME} STREQUAL "arr")
+if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
     add_subdirectory(tlbx)
     add_subdirectory(examples)
 endif()
