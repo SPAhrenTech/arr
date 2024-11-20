@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10) # required
 project(arr)  # project name
 		
 file(GLOB_RECURSE cpp_headers headers/*.hpp)
-file(GLOB_RECURSE cpp_sources sources/*.cpp)
+file(GLOB_RECURSE cpp_sources sources/*.cpp sources/*.tem)
 set(cpp_srcs ${PROJECT_NAME}.hpp ${cpp_headers} ${cpp_sources})
 
 add_library(${PROJECT_NAME} STATIC ${cpp_srcs})
