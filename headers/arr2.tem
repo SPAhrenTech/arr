@@ -12,7 +12,7 @@ template <class data_type>
 arr2<data_type>::arr2(const std::size_t nRows, std::size_t nCols, const data_type* a)
     : m_nRows(nRows), m_nCols(nCols)
 {
-    m_a = std::unique_ptr<data_type[]>(new data_type[size()]);
+    m_a = new data_type[size()];
     if ((m_a != nullptr) && (a != nullptr)) {
         for (std::size_t i = 0; i < m_nRows; i++)
             for (std::size_t j = 0; j < m_nCols; j++)
@@ -51,7 +51,7 @@ arr2<data_type>::arr2(std::initializer_list<std::initializer_list<data_type>> A)
 		first = false;
 		++m_nRows;
 	}
-	m_a = std::unique_ptr<data_type[]>(new data_type[size()]);
+	m_a = new data_type[size()];
 	if (m_a != nullptr) {
 		std::size_t i = 0;
 		for(auto &aRow:A)
@@ -72,7 +72,7 @@ arr2<data_type>::arr2(std::initializer_list<std::initializer_list<data_type>> A)
 template <class data_type>
 arr2<data_type>::~arr2()
 {
-    delete[] m_a.release();
+    delete[] m_a;
     m_a = nullptr;
     m_nRows = m_nCols = 0;
 }
@@ -83,10 +83,10 @@ arr2<data_type>& arr2<data_type>::operator=(const arr2<data_type>& A)
 {
     if (this == &A)
         return *this;
-    delete[] m_a.release();
+    delete[] m_a;
     m_nRows = A.m_nRows;
     m_nCols = A.m_nCols;
-    m_a = std::unique_ptr<data_type[]>(new data_type[size()]);
+    m_a = new data_type[size()];
     if (m_a != nullptr)
         for (std::size_t i = 0; i < A.m_nRows; i++)
             for (std::size_t j = 0; j < A.m_nCols; j++)
@@ -125,7 +125,7 @@ template <class data_type>
 void arr2<data_type>::resize(const size_t nRows, const size_t nCols)
 {
     arr2<data_type> b(*this);
-    delete[] m_a;
+    delete [] m_a;
     m_a = new data_type[nRows * nCols];
     if (m_a != nullptr) {
         m_nRows = nRows;

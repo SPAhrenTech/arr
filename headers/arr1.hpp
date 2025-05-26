@@ -17,8 +17,8 @@ template <class data_type>
 class arr1 {
 private:
 protected:
-	std::unique_ptr<data_type[]> m_a;
-	std::size_t m_n;
+	data_type* m_a = NULL;
+	std::size_t m_n = 0;
 	
 public:
 	arr1(const std::size_t n = 0, const data_type* a = NULL);
@@ -36,11 +36,11 @@ public:
 	void clear();
 	void append(const data_type ai);
 	
-	data_type* data() const { return m_a.get(); }
-	std::vector<data_type> vect();
+	data_type* data() const { return m_a; }
+	operator std::vector<data_type>();
 	
 	void resize(const std::size_t N0);
-	std::size_t size() const { return m_n; }
+	inline std::size_t size() const { return m_n; }
 	
 	bool operator==(const arr1& A) const;
 	bool operator!=(const arr1& A) const;
@@ -58,7 +58,7 @@ public:
 	arr1<std::size_t> iindex() const;
 	
 	arr1<data_type> operator()(const arr1<std::size_t> A);
-	
+	std::vector<data_type> operator()() const;
 	arr1<data_type> reverse();
 	
 	//

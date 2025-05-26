@@ -9,7 +9,7 @@ namespace arr {
 template <class data_type>
 arr1<data_type>::arr1(const size_t n, const data_type* a) : m_n(n)
 {
-    m_a = std::unique_ptr<data_type[]>(new data_type[m_n]);
+    m_a = new data_type[m_n];
     if ((m_a != nullptr) && (a != nullptr))
         for (std::size_t i = 0; i < size(); i++)
             m_a[i] = a[i];
@@ -27,8 +27,8 @@ arr1<data_type>::arr1(const arr1<data_type>& A) : arr1(A.size())
 template <class data_type>
 arr1<data_type>& arr1<data_type>::operator=(const arr1<data_type>& A)
 {
-    delete[] m_a.release();
-    m_a = std::unique_ptr<data_type[]>(new data_type[A.m_n]);
+    delete [] m_a;
+    m_a = new data_type[A.m_n];
     if (m_a != nullptr) {
         m_n = A.m_n;
         for (std::size_t i = 0; i < A.m_n; i++)
@@ -51,7 +51,7 @@ arr1<data_type> arr1<data_type>::reverse()
 template <class data_type>
 void arr1<data_type>::clear()
 {
-    delete [] m_a.release();
+    delete [] m_a;
     m_a = nullptr;
     m_n = 0;
 }
@@ -61,11 +61,11 @@ template <class data_type>
 void arr1<data_type>::resize(const std::size_t n)
 {
     arr1<data_type> b(*this);
-    delete[] m_a.release();
-    m_a = std::unique_ptr<data_type[]>(new data_type[n]);
+    delete [] m_a;
+    m_a = new data_type[n];
     if (m_a != nullptr) {
         m_n = n;
-        for (std::size_t i = 0; i < b.size(); i++)
+        for (std::size_t i = 0; i < b.size(); ++i)
             if (i < size())
                 m_a[i] = b.m_a[i];
     }
@@ -83,7 +83,7 @@ void arr1<data_type>::append(const data_type ai)
 template <class data_type>
 arr1<data_type>::~arr1()
 {
-    delete [] m_a.release();
+    delete [] m_a;
     m_a = nullptr;
     m_n = 0;
 }
@@ -96,7 +96,7 @@ bool arr1<data_type>::operator==(const arr1<data_type>& A) const
     if (A.size() != m_n) {
         return false;
     }
-    for (std::size_t i = 0; i < m_n; i++)
+    for (std::size_t i = 0; i < m_n; ++i)
         res = res & (m_a[i] == A(i));
     return res;
 }
@@ -105,7 +105,7 @@ bool arr1<data_type>::operator==(const arr1<data_type>& A) const
 template <class data_type>
 arr1<data_type> arr1<data_type>::operator=(const data_type& x)
 {
-    for (std::size_t i = 0; i < size(); i++)
+    for (std::size_t i = 0; i < size(); ++i)
         at(i) = x;
     return *this;
 }
@@ -148,7 +148,7 @@ template <class data_type>
 arr1<std::size_t> arr1<data_type>::iindex() const
 {
     arr1<data_type> res(size());
-    for (std::size_t i = 0; i < m_n; i++)
+    for (std::size_t i = 0; i < m_n; ++i)
         res(i) = i;
     return res;
 }
@@ -159,18 +159,18 @@ arr1<data_type> arr1<data_type>::operator()(const arr1<std::size_t> A)
 {
     std::size_t m = A.size();
     arr1<data_type> res(m);
-    for (std::size_t i = 0; i < m; i++)
-        res(i) = at(A(i));
+    for (std::size_t i = 0; i < m; ++i)
+        res(i) = m_a[A(i)];
 }
 
 //
 template <class data_type>
-std::vector<data_type> arr1<data_type>::vect()
+std::vector<data_type> arr1<data_type>::operator()() const
 {
     std::vector<data_type> v(m_n);
-    for (std::size_t i = 0; i < m_n; i++) {
-        data_type x = at(i);
-        v.at(i) = x;
+    for (std::size_t i = 0; i < m_n; ++i) {
+        data_type x = m_a[i];
+        v[i] = x;
     }
     return v;
 }
@@ -180,7 +180,7 @@ template <class data_type>
 std::ostream& operator<<(std::ostream& os, const arr1<data_type>& A)
 {
     os << "(";
-    for (size_t i = 0; i < A.size(); i++) {
+    for (size_t i = 0; i < A.size(); ++i) {
         if (i > 0)
             os << "\t";
         os << A(i);
