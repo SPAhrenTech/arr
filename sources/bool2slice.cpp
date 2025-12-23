@@ -8,26 +8,26 @@
 namespace arr {
 
 //
-barr1::barr1(const barr2slice &A) : bool_arr1(A) {}
-barr2::barr2(const barr2slice &A) : bool_arr2(A) {}
+bool1::bool1(const bool2slice &A) : bool_arr1(A) {}
+bool2::bool2(const bool2slice &A) : bool_arr2(A) {}
 
 //
-barr2slice barr2::slice(const std::size_t iDim, const std::size_t iIndex) { return barr2slice(this, iDim, iIndex); }
-barr2slice barr2::row(const std::size_t iIndex) { return barr2slice(this, 0, iIndex); }
-barr2slice barr2::col(const std::size_t iIndex) { return barr2slice(this, 1, iIndex); }
+bool2slice bool2::slice(const std::size_t iDim, const std::size_t iIndex) { return bool2slice(this, iDim, iIndex); }
+bool2slice bool2::row(const std::size_t iIndex) { return bool2slice(this, 0, iIndex); }
+bool2slice bool2::col(const std::size_t iIndex) { return bool2slice(this, 1, iIndex); }
 
 //
-barr2 barr2slice::operator|(const barr2slice &A) const {
-	return barr2(*this) | barr2(A);
+bool2 bool2slice::operator|(const bool2slice &A) const {
+	return bool2(*this) | bool2(A);
 }
 
 //
-barr2 barr2slice::operator&(const barr2slice &A) const {
-	return barr2(*this) & barr2(A);
+bool2 bool2slice::operator&(const bool2slice &A) const {
+	return bool2(*this) & bool2(A);
 }
 
 //
-void barr2slice::operator|=(const barr2 &A) {
+void bool2slice::operator|=(const bool2 &A) {
 	switch (dim()) {
 		case 0:
 			for (std::size_t i = 0; i < size(); i++)
@@ -41,7 +41,7 @@ void barr2slice::operator|=(const barr2 &A) {
 }
 
 //
-void barr2slice::operator&=(const barr2 &A) {
+void bool2slice::operator&=(const bool2 &A) {
 	switch (dim()) {
 		case 0:
 			for (std::size_t i = 0; i < size(); i++)
@@ -55,7 +55,7 @@ void barr2slice::operator&=(const barr2 &A) {
 }
 
 //
-void barr2slice::operator=(const bool x) {
+void bool2slice::operator=(const bool x) {
 	switch (dim()) {
 		case 0:
 			for (std::size_t i = 0; i < size(); i++)

@@ -6,15 +6,14 @@
 #include "arr.hpp"
 
 namespace arr {
-//
-uiarr1::uiarr1(const uint_arr1& A) : uint_arr1(A.size())
+
+uint1::uint1(const uint_arr1& A) : uint_arr1(A.size())
 {
     for (size_t i = 0; i < m_n; i++)
         at(i) = A(i);
 }
 
-//
-uiarr1::uiarr1(const darr1& A)
+uint1::uint1(const dbl1& A)
 {
     resize(A.size());
     for (size_t i = 0; i < m_n; i++)

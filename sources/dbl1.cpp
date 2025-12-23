@@ -12,37 +12,37 @@
 namespace arr {
 
 //
-darr1 darr1::operator+() const { return *this; }
+dbl1 dbl1::operator+() const { return *this; }
 
 //
-darr1 darr1::operator-() const
+dbl1 dbl1::operator-() const
 {
-    darr1 res(*this);
+    dbl1 res(*this);
     for (size_t i = 0; i < size(); ++i)
         res(i) *= -1;
     return res;
 }
 
 //
-darr1 darr1::operator+(const darr1& A) const
+dbl1 dbl1::operator+(const dbl1& A) const
 {
-    darr1 res(*this);
+    dbl1 res(*this);
     for (size_t i = 0; i < size(); ++i)
         res(i) += A(i);
     return res;
 }
 
 //
-darr1 darr1::operator-(const darr1& A) const
+dbl1 dbl1::operator-(const dbl1& A) const
 {
-    darr1 res(*this);
+    dbl1 res(*this);
     for (size_t i = 0; i < size(); ++i)
         res(i) -= A(i);
     return res;
 }
 
 //
-double darr1::dot(const darr1& A) const
+double dbl1::dot(const dbl1& A) const
 {
     double res = 0;
     if (size() != A.size()) {
@@ -54,18 +54,18 @@ double darr1::dot(const darr1& A) const
     return res;
 }
 
-darr1 darr1::operator+=(const darr1& A) { return *this = *this + A; }
+dbl1 dbl1::operator+=(const dbl1& A) { return *this = *this + A; }
 
-darr1 darr1::operator-=(const darr1& A) { return *this = *this - A; }
+dbl1 dbl1::operator-=(const dbl1& A) { return *this = *this - A; }
 
-darr1 darr1::operator/(double x) const { return (1. / x) * (*this); }
+dbl1 dbl1::operator/(double x) const { return (1. / x) * (*this); }
 
-darr1 darr1::operator*=(double x) { return *this = x * (*this); }
+dbl1 dbl1::operator*=(double x) { return *this = x * (*this); }
 
-darr1 darr1::operator/=(double x) { return *this = (*this) / x; }
+dbl1 dbl1::operator/=(double x) { return *this = (*this) / x; }
 
 //
-double darr1::sum() const
+double dbl1::sum() const
 {
     double res = 0;
     for (size_t i = 0; i < size(); ++i)
@@ -74,7 +74,7 @@ double darr1::sum() const
 }
 
 //
-double darr1::sumSqr() const
+double dbl1::sumSqr() const
 {
     double res = 0;
     for (size_t i = 0; i < size(); ++i)
@@ -83,19 +83,19 @@ double darr1::sumSqr() const
 }
 
 //
-darr1 operator*(double x, const darr1& A)
+dbl1 operator*(double x, const dbl1& A)
 {
-    darr1 res(A);
+    dbl1 res(A);
     for (size_t i = 0; i < A.size(); ++i)
         res(i) = x * A(i);
     return res;
 }
 
 //
-double darr1::mag() const { return ::sqrt(sumSqr()); }
+double dbl1::mag() const { return ::sqrt(sumSqr()); }
 
 //
-bool darr1::swap(std::size_t i1, std::size_t i2)
+bool dbl1::swap(std::size_t i1, std::size_t i2)
 {
     if (!((i1 < size() && (i2 < size()))))
         return false;
@@ -106,39 +106,39 @@ bool darr1::swap(std::size_t i1, std::size_t i2)
 }
 
 //
-darr1 darr1::sub(std::size_t iRow, std::size_t nRow) const
+dbl1 dbl1::sub(std::size_t iRow, std::size_t nRow) const
 {
     if (iRow + nRow > size())
         nRow = size() - iRow;
-    darr1 res(nRow);
+    dbl1 res(nRow);
     for (size_t i = 0; i < nRow; ++i)
         res(i) = at(i + iRow);
     return res;
 }
 
 //
-darr1 darr1::zero(const size_t n)
+dbl1 dbl1::zero(const size_t n)
 {
-    darr1 res(n);
+    dbl1 res(n);
     res = 0.;
     return res;
 }
 
 //
-darr1 darr1::pwr(double x) const
+dbl1 dbl1::pwr(double x) const
 {
-    darr1 A(size());
+    dbl1 A(size());
     for (size_t i = 0; i < size(); ++i)
         A(i) = pow(at(i), x);
     return A;
 }
 
-darr1 darr1::sqr() const { return pwr(2); }
+dbl1 dbl1::sqr() const { return pwr(2); }
 
-darr1 darr1::sqrt() const { return pwr(0.5); }
+dbl1 dbl1::sqrt() const { return pwr(0.5); }
 
-darr1 sqr(const darr1& A) { return A.sqr(); }
+dbl1 sqr(const dbl1& A) { return A.sqr(); }
 
-darr1 sqrt(const darr1& A) { return A.sqrt(); }
+dbl1 sqrt(const dbl1& A) { return A.sqrt(); }
 
 } // namespace arr
