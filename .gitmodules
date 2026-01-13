@@ -2,3 +2,7 @@
 [submodule "tlbx"]
 	path = tlbx
 	url = https://github.com/SPAhrenTech/tlbx.git
+
+[submodule "vendor/googletest"]
+	path = vendor/googletest
+	url = https://github.com/google/googletest.git
