@@ -6,20 +6,21 @@
 #include <iostream>
 
 #include "arr2slice.hpp"
+#include "bool_type.hpp"
 
 namespace arr {
 
 class bool2;
 
-typedef arr2slice<bool> bool_arr2slice;
+typedef arr2slice<bool_type> bool_arr2slice;
 
 //
 class bool2slice : public bool_arr2slice {
 private:
 	
 public:
-	bool2slice(bool2 *A, const std::size_t iDim, const std::size_t iIndex) : bool_arr2slice(A, iDim, iIndex) {}
-	bool2slice(const bool_arr2slice &A) : bool_arr2slice(A.data(), A.dim(), A.index()) {}
+	bool2slice(bool2 *A, const std::size_t iDim, const std::size_t iIndex);
+	bool2slice(const bool_arr2slice &A);
 	
 	bool2 operator|(const bool2slice &A) const;
 	bool2 operator&(const bool2slice &A) const;

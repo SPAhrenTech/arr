@@ -5,21 +5,22 @@
 
 #include <iostream>
 
-#include "arr2.hpp"
+#include "arr3.hpp"
+#include "bool_type.hpp"
 
 namespace arr {
-	typedef arr3<bool> bool_arr3;
+
+	typedef arr3<bool_type> bool_arr3;
 
 	class bool3 : public bool_arr3 {
 	private:
 
 	public:
-			bool3(const std::size_t N0 = 0, const std::size_t N1 = 0, const std::size_t N2 = 0, const bool *a = NULL)
-							: bool_arr3(N0, N1, N2, a) {}
+			bool3(const std::size_t N0 = 0, const std::size_t N1 = 0, const std::size_t N2 = 0, const bool *b = NULL);
 
-			bool3(const bool_arr3 &A) : bool_arr3(A.size(0), A.size(1), A.size(2), A.source()) {}
+			bool3(const bool_arr3 &A);
 
-			bool3 operator=(const bool &x) { return bool_arr3::operator=(x); }
+			bool3 operator=(const bool &x);
 
 			bool hasTrue() const;
 

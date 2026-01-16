@@ -4,34 +4,35 @@
 #include <math.h>
 #include <iostream>
 
+#import "arr1.hpp"
+#import "arr2.hpp"
+
 namespace arr {
 
 template<class data_type>
-arr2sub<data_type>::arr2sub(arr2<data_type> *a, const std::size_t iRow, const std::size_t iCol,
-														const std::size_t nRows, const std::size_t nCols):m_a(a) {
-		if (iRow < a->size(0)) m_iRow = iRow;
-		else m_iRow = size(0) - 1;
-		if (iCol < a->size(1))m_iCol = iCol;
-		else m_iCol = size(1) - 1;
+arr2sub<data_type>::arr2sub(arr2<data_type> *a,
+	const std::size_t iRow,const std::size_t iCol,
+	const std::size_t nRows, const std::size_t nCols):_a(a)
+{
+		if (iRow < a->size(0)) _iRow = iRow;
+		else _iRow = size(0) - 1;
+		if (iCol < a->size(1))_iCol = iCol;
+		else _iCol = size(1) - 1;
 
-		if (iRow + nRows <= a->size(0)) m_nRows = nRows;
-		else m_nRows = size(0) - m_iRow - 1;
-		if (iCol + nCols <= a->size(1)) m_nCols = nCols;
-		else m_nCols = size(1) - m_iCol - 1;
+		if (iRow + nRows <= a->size(0)) _nRows = nRows;
+		else _nRows = size(0) - _iRow - 1;
+		if (iCol + nCols <= a->size(1)) _nCols = nCols;
+		else _nCols = size(1) - _iCol - 1;
 }
 
-//
 template<class data_type>
 arr2sub<data_type>::arr2sub(const arr2sub<data_type> &A)
-				:arr2sub(A.source(), A.index(0), A.index(1), A.size(0), A.size(1)) {
-}
+		:arr2sub(A._a,A._iRow,A._iCol,A._nRows,A._nCols) {}
 
-//
 template<class data_type>
 arr2sub<data_type>::~arr2sub() {
 }
 
-//
 template<class data_type>
 void arr2sub<data_type>::operator=(const arr2sub<data_type> &A) {
 		if (size(0) != A.size(0)) return;
@@ -51,23 +52,60 @@ void arr2sub<data_type>::operator=(const arr2<data_type> &A) {
 						at(i, j) = A(i, j);
 }
 
-//
 template<class data_type>
-data_type arr2sub<data_type>::at(const std::size_t i, const std::size_t j) const {
-		return m_a->at(m_iRow + i, m_iCol + j);
+void arr2sub<data_type>::operator=(const data_type &x)
+{
+	for (std::size_t i = 0; i < size(0); i++)
+		for (std::size_t j = 0; j < size(1); j++)
+			at(i, j) = x;
 }
 
-//
 template<class data_type>
-data_type &arr2sub<data_type>::at(const std::size_t i, const std::size_t j) {
-		return m_a->at(m_iRow + i, m_iCol + j);
+data_type &arr2sub<data_type>::at(const std::size_t i, const std::size_t j)
+{
+		return _a->at(_iRow + i, _iCol + j);
 }
 
-//
 template<class data_type>
-void arr2sub<data_type>::operator=(const data_type &x) {
-		for (std::size_t i = 0; i < size(0); i++)
-				for (std::size_t j = 0; j < size(1); j++)
-						at(i, j) = x;
+data_type const &arr2sub<data_type>::at(const std::size_t i, const std::size_t j) const
+{
+		return _a->at(_iRow + i, _iCol + j);
 }
+
+template<class data_type>
+data_type &arr2sub<data_type>::operator()(const std::size_t i, const std::size_t j)
+{
+	return at(i,j);
+}
+
+template<class data_type>
+data_type const &arr2sub<data_type>::operator()(const std::size_t i, const std::size_t j) const
+{
+	return at(i,j);
+}
+
+template<class data_type>
+arr2<data_type> *arr2sub<data_type>::data()
+{
+	return _a;
+}
+
+template<class data_type>
+arr2<data_type> const *arr2sub<data_type>::data() const
+{
+	return _a;
+}
+
+template<class data_type>
+std::size_t arr2sub<data_type>::index(const std::size_t i) const
+{
+	return (i == 0) ? _iRow : _iCol;
+}
+
+template<class data_type>
+std::size_t arr2sub<data_type>::size(const std::size_t i) const
+{
+	return (i == 0) ? _nRows : _nCols;
+}
+
 }

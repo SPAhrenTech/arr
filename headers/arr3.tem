@@ -8,7 +8,6 @@
 #include "arr2.hpp"
 #include "arr2sub.hpp"
 #include "arr2slice.hpp"
-#include "arr3.hpp"
 #include "error.hpp"
 
 namespace arr {
@@ -17,153 +16,134 @@ template <class data_type>
 arr3<data_type>::arr3(const std::size_t n0,
                       const std::size_t n1,
                       const std::size_t n2,
-                      const data_type* a)
-    : m_n0(n0), m_n1(n1), m_n2(n2)
+                      const data_type* p)
+    : _n0(n0),_n1(n1),_n2(n2),_v(n0*n1*n2)
 {
-    m_a = new data_type[size()];
-    if ((m_a != nullptr) && (a != nullptr)) {
-        for (std::size_t i = 0; i < m_n0; ++i)
-            for (std::size_t j = 0; j < m_n1; ++j)
-                for (std::size_t k = 0; k < m_n2; ++k)
-                    m_a[i * m_n1 * m_n2 + j * m_n2 + k] = a[i * m_n1 * m_n2 + j * m_n2 + k];
-    }
+	if(p)
+		_v.assign(p,p+n0*n1*n2);
 }
 
 // copy constructor
 template <class data_type>
-arr3<data_type>::arr3(const arr3<data_type>& A) : arr3(A.size(0), A.size(1), A.size(2))
+arr3<data_type>::arr3(const arr3<data_type>& A):arr3(A.size(0),A.size(1),A.size(2),A.data())
 {
-    for (std::size_t i = 0; i < m_n0; ++i)
-        for (std::size_t j = 0; j < m_n1; ++j)
-            for (std::size_t k = 0; k < m_n2; ++k)
-                m_a[i * m_n1 * m_n2 + j * m_n2 + k] = A(i, j, k);
 }
 
-//
 template <class data_type>
 arr3<data_type>::~arr3()
 {
-    delete[] m_a;
-    m_a = nullptr;
-    m_n0 = m_n1 = m_n2 = 0;
+	_n0=_n1=_n2=0;
 }
 
-//
+template <class data_type>
+std::vector<data_type> arr3<data_type>::operator()() const
+{
+    return _v;
+}
+
 template <class data_type>
 arr3<data_type>& arr3<data_type>::operator=(const arr3<data_type>& A)
 {
-    if (this == &A)
-        return *this;
-    delete[] m_a;
-    m_n0 = A.m_n0;
-    m_n1 = A.m_n1;
-    m_n2 = A.m_n2;
-    m_a = new data_type[size()];
-    if (m_a != nullptr)
-        for (std::size_t i = 0; i < A.m_n0; ++i)
-            for (std::size_t j = 0; j < A.m_n1; ++j)
-                for (std::size_t k = 0; k < A.m_n2; ++k)
-                    at(i, j, k) = A(i, j, k);
+    _n0 = A._n0;
+    _n1 = A._n1;
+    _n2 = A._n2;
+    _v = A._v;
 
     return *this;
 }
 
-//
 template <class data_type>
 arr3<data_type>& arr3<data_type>::operator=(const data_type& x)
 {
-    for (std::size_t i = 0; i < m_n0; ++i)
-        for (std::size_t j = 0; j < m_n1; ++j)
-            for (std::size_t k = 0; k < m_n2; ++k)
-                at(i, j, k) = x;
-
-    return *this;
+	std::fill(_v.begin(),_v.end(),x);
+	return *this;
 }
 
-//
+template <class data_type>
+std::size_t arr3<data_type>::size() const { return _n0 * _n1 * _n2; }
+	
 template <class data_type>
 std::size_t arr3<data_type>::size(const std::size_t d) const
 {
     switch (d) {
     case 0:
-        return m_n0;
+        return _n0;
     case 1:
-        return m_n1;
+        return _n1;
     case 2:
-        return m_n2;
+        return _n2;
     default:
         return 0;
     }
 }
 
-//
+template <class data_type>
+bool arr3<data_type>::isCube() const
+{
+	return (_n0 == _n1) && (_n0 == _n2);
+}
+	
 template <class data_type>
 void arr3<data_type>::resize(const size_t n0, const size_t n1, const size_t n2)
 {
-    arr3<data_type> b(*this);
-    delete[] m_a;
-    m_a = new data_type[n0 * n1 * n2];
-    if (m_a != nullptr) {
-        m_n0 = n0;
-        m_n1 = n1;
-        m_n2 = n2;
-        for (std::size_t i = 0; i < b.m_n0; ++i)
-            for (std::size_t j = 0; j < b.m_n1; ++j)
-                for (std::size_t k = 0; k < b.m_n2; ++k)
-                    if ((i < m_n0) && (j < m_n1) && (k < m_n2))
-                        at(i, j, k) = b(i, j, k);
-    }
+	_n0=n0;_n1=n1;_n2=n2;
+	_v.resize(n0 * n1 * n2);
 }
 
-//
 template <class data_type>
 bool arr3<data_type>::operator==(const arr3<data_type>& A) const
 {
-    bool res = (m_n0 == A.m_n0) && (m_n1 == A.m_n1) && (m_n2 == A.m_n2);
-    if (res) {
-        for (std::size_t i = 0; i < m_n0; ++i)
-            for (std::size_t j = 0; j < m_n1; ++j)
-                for (std::size_t k = 0; k < m_n2; ++k)
+    bool res = (_n0 == A._n0) && (_n1 == A._n1) && (_n2 == A._n2);
+    if (res)
+    {
+        for (std::size_t i = 0; i < _n0; ++i)
+            for (std::size_t j = 0; j < _n1; ++j)
+                for (std::size_t k = 0; k < _n2; ++k)
                     res = res & (at(i, j, k) == A(i, j, k));
     }
     return res;
 }
 
-//
 template <class data_type>
 bool arr3<data_type>::operator!=(const arr3<data_type>& A) const
 {
     return !((*this) == A);
 }
 
-//
 template <class data_type>
 data_type& arr3<data_type>::at(const std::size_t i, const std::size_t j, const std::size_t k)
 {
-    if (!((i < m_n0) && (j < m_n1) && (k < m_n2)))
-        err = 1;
-    return m_a[i * m_n1 * m_n2 + j * m_n2 + k];
+    return _v.at(i * _n1 * _n2 + j * _n2 + k);
 }
 
-//
 template <class data_type>
-data_type const&
-arr3<data_type>::at(const std::size_t i, const std::size_t j, const std::size_t k) const
+data_type const& arr3<data_type>::at(const std::size_t i, const std::size_t j, const std::size_t k) const
 {
-    if (!((i < m_n0) && (j < m_n1) && (k < m_n2)))
-        err = 1;
-    return m_a[i * m_n1 * m_n2 + j * m_n2 + k];
+    return _v.at(i * _n1 * _n2 + j * _n2 + k);
 }
 
-//
 template <class data_type>
-std::vector<data_type> arr3<data_type>::vect()
+data_type& arr3<data_type>::operator()(const std::size_t i, const std::size_t j, const std::size_t k)
 {
-    std::vector<data_type> v(size());
-    for (std::size_t i = 0; i < m_n0; ++i)
-        for (std::size_t j = 0; j < m_n1; ++j)
-            for (std::size_t k = 0; k < m_n2; ++k)
-                v.at(i * m_n1 * m_n2 + j * m_n2 + k) = at(i, j, k);
-    return v;
+	return at(i, j, k);
 }
+
+template <class data_type>
+data_type const& arr3<data_type>::operator()(const std::size_t i, const std::size_t j, const std::size_t k) const
+{
+	return at(i, j, k);
+}
+
+template <class data_type>
+data_type* arr3<data_type>::data()
+{
+	return _v.data();
+}
+
+template <class data_type>
+data_type const* arr3<data_type>::data() const
+{
+	return _v.data();
+}
+
 } // namespace arr

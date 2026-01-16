@@ -22,11 +22,10 @@ class dbl2 : public double_arr2 {
 private:
 
 public:
-	dbl2(const std::size_t nRows = 0, std::size_t nCols = 0, const double* a = NULL)
-	: double_arr2(nRows, nCols, a) {}
+	dbl2(const std::size_t nRows = 0, std::size_t nCols = 0, const double* a = NULL);
 	
-	dbl2(const dbl1& A) : double_arr2(A.size(),1,A.data()) {}
-	dbl2(const double_arr2& A) : double_arr2(A.size(0), A.size(1), A.data()) {}
+	dbl2(const dbl1& A);
+	dbl2(const double_arr2& A);
 	dbl2(const dbl2slice& A);
 	dbl2(const dbl2sub& A);
 	dbl2(const uint2& A);
@@ -40,7 +39,7 @@ public:
 	dbl2 operator+=(const dbl2& A);
 	dbl2 operator-=(const dbl2& A);
 	
-	dbl2 operator=(const double& x) { return double_arr2::operator=(x); }
+	dbl2 operator=(const double& x);
 	dbl2 operator*=(double x);
 	dbl2 operator/=(double x);
 	
@@ -56,8 +55,8 @@ public:
 	
 	bool isSquareSymm() const;
 	
-	dbl2 minor(const std::size_t m, const std::size_t n) const { return double_arr2::minor(m, n); }
-	dbl2 T() const { return double_arr2::T(); }
+	dbl2 minor(const std::size_t m, const std::size_t n) const;
+	dbl2 T() const;
 	dbl2 inv() const;
 	dbl1 diag() const;
 	
@@ -115,8 +114,8 @@ public:
 	
 	void rotR(const size_t iCol, const size_t jCol, double ang);
 	void rotL(const size_t iRow, const size_t jRow, double ang);
-	dbl2 zero() { return *this = dbl2::zero(m_nRows, m_nCols); }
-	dbl2 ident() { return *this = dbl2::ident(m_nRows, m_nCols); }
+	dbl2 zero();
+	dbl2 ident();
 	
 	static bool showOutput;
 };

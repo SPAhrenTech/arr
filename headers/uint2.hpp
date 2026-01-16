@@ -22,13 +22,13 @@ public:
 
 	uint2 minor(const std::size_t iRow, const std::size_t iCol) const;
 
-	dbl2 operator+() const { return +dbl2(*this); }
+	dbl2 operator+() const;
 
-	dbl2 operator-() const { return -dbl2(*this); }
+	dbl2 operator-() const;
 
-	dbl2 operator+(const dbl2 &A) const { return dbl2(*this) + A; }
+	dbl2 operator+(const dbl2 &A) const;
 
-	dbl2 operator-(const dbl2 &A) const { return dbl2(*this) - A; }
+	dbl2 operator-(const dbl2 &A) const;
 
 	uint2 operator=(const std::size_t &x) { return uint_arr2::operator=(x); }
 

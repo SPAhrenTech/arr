@@ -19,10 +19,9 @@ private:
 
 public:
 		dbl2sub(dbl2 *A, const std::size_t iRow, const std::size_t iCol, const std::size_t nRows,
-						 const std::size_t nCols) : double_arr2sub(A, iRow, iCol, nRows, nCols) {}
+						 const std::size_t nCols);
 
-		dbl2sub(const double_arr2sub &A) : double_arr2sub(A.data(), A.index(0), A.index(1), A.size(0), A.size(1)) {}
-
+		dbl2sub(const double_arr2sub &A);
 		dbl2 operator+() const;
 
 		dbl2 operator-() const;

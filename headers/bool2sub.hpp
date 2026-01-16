@@ -5,14 +5,13 @@
 
 #include <iostream>
 
-#ifndef _ARR2SUB_
 #include "arr2sub.hpp"
-#endif
+#include "bool_type.hpp"
 
 namespace arr {
 class bool2;
 
-typedef arr2sub<bool> bool_arr2sub;
+typedef arr2sub<bool_type> bool_arr2sub;
 
 //
 class bool2sub : public bool_arr2sub {
@@ -20,10 +19,10 @@ private:
 
 public:
 		bool2sub(bool2 *A, const std::size_t iRow, const std::size_t iCol, const std::size_t nRows,
-						 const std::size_t nCols) : bool_arr2sub(A, iRow, iCol, nRows, nCols) {}
+						 const std::size_t nCols);
 
-		bool2sub(const bool_arr2sub &A) : bool_arr2sub(A.data(), A.index(0), A.index(1), A.size(0), A.size(1)) {}
-
+		bool2sub(const bool_arr2sub &A);
+		
 		bool2 operator|(const bool2sub &A) const;
 
 		bool2 operator&(const bool2sub &A) const;

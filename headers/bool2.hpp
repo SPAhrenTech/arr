@@ -6,20 +6,21 @@
 #include <iostream>
 
 #include "arr2.hpp"
+#include "bool_type.hpp"
 
 namespace arr {
 class bool2slice;
 
 class bool2sub;
 
-typedef arr2<bool> bool_arr2;
+typedef arr2<bool_type> bool_arr2;
 
 class bool2 : public bool_arr2 {
 private:
 	
 public:
-	bool2(const std::size_t N0 = 0, const std::size_t N1 = 0, const bool *a = NULL) : bool_arr2(N0, N1, a) {}
-	bool2(const bool_arr2 &A) : bool_arr2(A.size(0), A.size(1), A.data()) {}
+	bool2(const std::size_t N0 = 0, const std::size_t N1 = 0, const bool *b = NULL);
+	bool2(const bool_arr2 &A);
 	bool2(const bool2slice &A);
 	bool2(const bool2sub &A);
 	
@@ -27,7 +28,7 @@ public:
 	
 	bool2 operator&(const bool2 &b) const;
 	
-	bool2 operator=(const bool &x) { return bool_arr2::operator=(x); }
+	bool2 operator=(const bool &x);
 	bool2 &operator|=(const bool2 &b);
 	bool2 &operator&=(const bool2 &b);
 	

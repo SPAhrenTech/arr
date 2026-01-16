@@ -6,3 +6,15 @@ fatal: A git directory for 'tlbx' is found locally with remote(s):
   origin        https://github.com/SPAhrenTech/tlbx.git
 
 But I can't find this repository locally. How can I remove it and re-add the submodule from the remote source?
+
+Can I tell Xcode to display my .tem files with .cpp formatting?
+
+For Method 2, I don't see "File Type" in Build Settings.
+
+Can you use a wildcard, for example *.tem", instead of listing each file?
+
+Can I use automatic syntax coloring for CMakeLists.txt files in Xcode?
+
+How do I make automatic syntax coloring work in VS Code so that .tem files are displayed as .cpp?
+
+Can

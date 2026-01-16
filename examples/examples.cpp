@@ -14,21 +14,21 @@ namespace examples {
  
 void example1(){
 
-	arr::darr1 d1({1,2,3});
+	arr::dbl1 d1({1,2,3});
 	std::cout<<d1<<"\n";
 
-	arr::darr2 d2({{4,5,6},{1,7,2,3}});
+	arr::dbl2 d2({{4,5,6},{1,7,2,3}});
 	std::cout<<d2<<"\n";
 	
-	arr::darr2 M=arr::darr2::zero(5,6);
+	arr::dbl2 M=arr::dbl2::zero(5,6);
 	for(std::size_t i=0;i<M.size(0);++i)
 		for(std::size_t j=0;j<M.size(1);++j)
-			M(i,j)=mth::rndom();
+			M(i,j)=mth::random();
 	
-	std::cout<<M.rowEschelon()<<"\n";
+	//std::cout<<M.rowEschelon()<<"\n";
 	
-	arr::darr2 V;
-	arr::darr2 S=(M*M.T()).diagSymm(V);
+	arr::dbl2 V;
+	arr::dbl2 S=(M*M.T()).diagSymm(V);
 	std::cout<<S<<"\n";
 	std::cout<<V<<"\n";
 	
@@ -38,7 +38,7 @@ void example1(){
 	for(size_t i=0;i<M.size(0);i++)
 	{
 		M.row(i)=i;
-		arr::darr1 C=M.row(i);
+		arr::dbl1 C=M.row(i);
 
 		std::cout<<"M:\n"<<M<<"\n";
 		std::cout<<"C:\n"<<C<<"\n";

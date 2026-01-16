@@ -11,6 +11,10 @@ source_group("headers" FILES ${cpp_headers})
 source_group("sources" FILES ${cpp_sources})
 source_group("" FILES ${PROJECT_NAME}.hpp)
 
+# Configure .tem files to be treated as C++ files
+file(GLOB tem_files headers/*.tem)
+#set_source_files_properties(${tem_files} PROPERTIES LANGUAGE CXX)
+
 add_library(${PROJECT_NAME} STATIC ${cpp_srcs})
         
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
@@ -22,7 +26,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/headers
     ${modules_dir}tlbx ${modules_dir}tlbx/headers)
 
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 

@@ -19,8 +19,8 @@ typedef arr1<double> double_arr1;
 class dbl1 : public double_arr1 {
 private:
 public:
-	dbl1(const std::size_t n=0,const double* ap=NULL) : double_arr1(n, ap) {}
-	dbl1(const double_arr1& A) : double_arr1(A.size(), A.data()) {}
+	dbl1(const std::size_t n=0,const double* ap=NULL);
+	dbl1(const double_arr1& A);
 	dbl1(const dbl2slice& A);
 	
 	dbl1 operator+() const;
@@ -28,7 +28,7 @@ public:
 	dbl1 operator+(const dbl1& A) const;
 	dbl1 operator-(const dbl1& A) const;
 	
-	dbl1 operator=(const double& x) { return double_arr1::operator=(x); }
+	dbl1 operator=(const double& x);
 	dbl1 operator+=(const dbl1& A);
 	dbl1 operator-=(const dbl1& A);
 	dbl1 operator/=(double x);

@@ -9,59 +9,62 @@
 #include <vector>
 
 namespace arr {
+
 template <class data_type>
 class arr2slice;
 
-//
 template <class data_type>
-class arr1 {
+class arr1
+ {
 private:
+
 protected:
-	data_type* m_a = NULL;
-	std::size_t m_n = 0;
+	std::vector<data_type> _v;
 	
 public:
-	arr1(const std::size_t n = 0, const data_type* a = NULL);
+	arr1(const std::size_t n=0, const data_type* p=NULL);
 	
 	arr1(const arr1<data_type>& A); // copy constructor
-	arr1(const std::vector<data_type>& A) : arr1(A.size(), A.data()) {}
+	arr1(const std::vector<data_type>& A);
 	arr1(std::initializer_list<data_type> A):arr1(std::vector(A)){}
 	arr1(const arr2slice<data_type>& A);
 	~arr1();
 		
+	std::vector<data_type> operator()() const;
+	arr1<data_type> operator()(const arr1<std::size_t> A);
 	arr1 operator=(const data_type& x);
 	arr1& operator=(const arr1<data_type>& A);
 	arr1<data_type>& operator=(const arr2slice<data_type>& A);
 	
-	void clear();
 	void append(const data_type ai);
-	
-	data_type* data() const { return m_a; }
-	operator std::vector<data_type>();
-	
-	void resize(const std::size_t N0);
-	inline std::size_t size() const { return m_n; }
-	
+
+	void resize(const std::size_t n);
+
+	void clear();
+	std::size_t size() const;
+
 	bool operator==(const arr1& A) const;
 	bool operator!=(const arr1& A) const;
-	
+
 	data_type& at(const std::size_t i);
 	data_type const& at(const std::size_t i) const;
-	data_type& operator()(const std::size_t i) { return at(i); }
-	data_type const& operator()(const std::size_t i) const { return at(i); }
+
+	data_type& operator()(const std::size_t i);
+	data_type const& operator()(const std::size_t i) const;
 	
-	data_type& cyc(const std::size_t i) { return (*this)(i % size()); }
-	data_type const& cyc(const std::size_t i) const { return (*this)(i & size()); }
+	data_type* data();
+	data_type const* data() const;
+		 
+	data_type& cyc(const std::size_t i);
+	data_type const& cyc(const std::size_t i) const;
 	
 	void copy(data_type* ap) const;
 	
 	arr1<std::size_t> iindex() const;
 	
-	arr1<data_type> operator()(const arr1<std::size_t> A);
-	std::vector<data_type> operator()() const;
 	arr1<data_type> reverse();
 	
-	//
+/*
 	class iterator {
 		data_type* ap;
 		
@@ -105,8 +108,9 @@ public:
 		data_type& operator*() { return *ap; }
 	};
 	
-	iterator begin() { return iterator(m_a); }	
-	iterator end() { return iterator(m_a + size()); }
+	iterator begin() { return iterator(_v.begin()); }
+	iterator end() { return iterator(_v.end()); }
+*/
 };
 
 template <class data_type>

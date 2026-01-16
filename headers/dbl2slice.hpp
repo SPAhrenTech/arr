@@ -18,9 +18,9 @@ class dbl2slice : public double_arr2slice {
 private:
 
 public:
-	dbl2slice(dbl2 *A, const std::size_t iDim, const std::size_t iIndex) : double_arr2slice(A, iDim, iIndex) {}
+	dbl2slice(dbl2 *A, const std::size_t iDim, const std::size_t iIndex);
 
-	dbl2slice(const double_arr2slice &A) : double_arr2slice(A.data(), A.dim(), A.index()) {}
+	dbl2slice(const double_arr2slice &A);
 
 	dbl2 operator+() const;
 
@@ -56,7 +56,7 @@ public:
 
 	friend dbl2 operator*(double x, const dbl2slice &A);
 
-	friend std::ostream &operator<<(std::ostream &os, const dbl2slice &A) { return os << dbl2(A); }
+	friend std::ostream &operator<<(std::ostream &os, const dbl2slice &A);
 };
 
 dbl1 pwr(const dbl2slice &A, const double x);
