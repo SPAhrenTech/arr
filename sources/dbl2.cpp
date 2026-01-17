@@ -146,7 +146,6 @@ dbl1 dbl2::diag() const
     return res;
 }
 
-//
 dbl2 dbl1::diag() const
 {
     std::size_t m = size();
@@ -158,7 +157,6 @@ dbl2 dbl1::diag() const
     return res;
 }
 
-//
 double dbl2::trace() const
 {
     if (!isSquare())
@@ -170,7 +168,6 @@ double dbl2::trace() const
     return res;
 }
 
-//
 double dbl2::diagProd() const
 {
     if (!isSquare())
@@ -182,7 +179,6 @@ double dbl2::diagProd() const
     return res;
 }
 
-//
 dbl2 dbl2::pseudoInvLeft() const
 {
     dbl2 AT = T();
@@ -377,7 +373,6 @@ bool dbl2::PLU(dbl2& P, dbl2& L, dbl2& U) const
     return true;
 }
 
-//
 double dbl2::det() const
 {
     if (!isSquare()) {
@@ -392,7 +387,6 @@ double dbl2::det() const
     return A.diagProd();
 }
 
-//
 dbl2 operator*(const double x, const dbl2& A)
 {
     dbl2 res(A);
@@ -403,7 +397,6 @@ dbl2 operator*(const double x, const dbl2& A)
     return res;
 }
 
-//
 bool dbl2::isSquareSymm() const
 {
     if (!isSquare())
@@ -446,7 +439,6 @@ double dbl2::findAngle(const size_t i, const size_t j, double& ang) const
     return fabs(Apq); // reduction in off(A) is 2*(A_pq)^2
 }
 
-//
 double dbl2::sum() const
 {
     double tot = 0.;
@@ -456,7 +448,6 @@ double dbl2::sum() const
     return tot;
 }
 
-//
 double dbl2::sumSqr() const
 {
     double tot = 0.;
@@ -802,8 +793,8 @@ void dbl2::rotR(const size_t iCol, const size_t jCol, double ang)
     }
 }
 
-// Multiplies *this by rotation matrix from left affecting rows iRow and
-// jRow
+// Multiplies *this by rotation matrix from left affecting
+// rows iRow and jRow
 void dbl2::rotL(const size_t iRow, const size_t jRow, double ang)
 {
     // cout<<"init:\n"<<*this<<"\n";
@@ -865,9 +856,7 @@ dbl2 dbl2::rowEschelon() const
             for (size_t k = 0; k < _nRows; k++) {
                 if (k != i) {
                     double fac = A(k, i);
-                    auto r = A.row(i);
-                    auto fr = fac * r;
-                    A.row(k) -= fr;
+                    A.row(k) -= fac * A.row(i);
                     A(k, i) = 0.;
                 }
             }

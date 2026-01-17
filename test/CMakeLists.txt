@@ -21,6 +21,15 @@ target_include_directories(${PROJECT_NAME}_tests PRIVATE "${PROJECT_SOURCE_DIR}"
 
 target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME} gtest)
 
+# Code sign to avoid macOS permission dialogs
+if(APPLE)
+    set_target_properties(${PROJECT_NAME}_tests PROPERTIES
+        XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "-"
+        XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
+        XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
+    )
+endif()
+
 include(GoogleTest)
 
 gtest_discover_tests(

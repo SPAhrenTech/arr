@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10) # required
-set(PROJECT_NAME arr)
-project(${PROJECT_NAME})  # project name
+
+project(arr)  # project name
 		
 file(GLOB_RECURSE cpp_headers headers/*.hpp headers/*.tem)
 file(GLOB_RECURSE cpp_sources sources/*.cpp)
@@ -39,11 +39,15 @@ if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
     add_subdirectory(examples)
 endif()
 
-if (${PROJECT_NAME}_BUILD_TESTING)
-    enable_testing()
-    set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
-    set(CMAKE_SUPPRESS_REGENERATION ON CACHE BOOL "" FORCE)
-    add_subdirectory(googletest)
+option(${PROJECT_NAME}_BUILD_TESTING "Build the testing tree" ON)
 
+if (${PROJECT_NAME}_BUILD_TESTING)
+    # Only add googletest if tlbx is the main project
+    if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
+        enable_testing()
+        set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
+        set(CMAKE_SUPPRESS_REGENERATION ON CACHE BOOL "" FORCE)
+        add_subdirectory(googletest)
+    endif()
     add_subdirectory(test)
 endif()
