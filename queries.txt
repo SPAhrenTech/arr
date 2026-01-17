@@ -17,4 +17,18 @@ Can I use automatic syntax coloring for CMakeLists.txt files in Xcode?
 
 How do I make automatic syntax coloring work in VS Code so that .tem files are displayed as .cpp?
 
-Can
+This message pops up every time I run either arr_tests or examples.
+“arr_tests” would like to access files in your Documents folder.
+ Can you make it go away?
+
+When I called "cmake .." from within the build folder, there was no arr.xcodeproj generated.
+
+cmake -G Xcode ..
+
+How can I auto-set the ${PROJECT_NAME}_BUILD_TESTING CMake variable to TRUE, when first building the project?
+
+Do I need to set ${PROJECT_NAME}, as in ./CMakeLists.txt and ./tlbx/CMakeLists.txt? Is ${PROJECT_NAME} defined when I call project("project_name")?
+
+I want the path to googletest to depend whether tlbx is the main project, or a submodule.
+If tlbx is a submodule (e.g., of arr), I don't want to "add_subdirectory(googletest)" within ./tlbx/CMakeLists.txt.
+Is there a way to do that?
