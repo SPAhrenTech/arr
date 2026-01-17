@@ -3,20 +3,25 @@
 #include <cstdlib>
 #include <math.h>
 
-#include "arr.hpp"
+#include "bool2.hpp"
+#include "bool2sub.hpp"
 
 namespace arr {
 
-//
+bool2sub::bool2sub(bool2 *A, const std::size_t iRow, const std::size_t iCol, const std::size_t nRows,
+	const std::size_t nCols):
+	bool_arr2sub(A, iRow, iCol, nRows, nCols)
+{}
+
+bool2sub::bool2sub(const bool_arr2sub &A):bool_arr2sub(A) {}
+
 bool2::bool2(const bool2sub &A) : bool_arr2(A) {}
 
-//
-bool2sub
-bool2::sub(const std::size_t iRow, const std::size_t iCol, const std::size_t nRows, const std::size_t nCols) {
+bool2sub bool2::sub(const std::size_t iRow, const std::size_t iCol, const std::size_t nRows, const std::size_t nCols)
+{
 		return bool_arr2::sub(iRow, iCol, nRows, nCols);
 }
 
-//
 bool2sub bool2::operator()(const std::size_t iRow, const std::size_t iCol, const std::size_t nRows,
 													 const std::size_t nCols) {
 		return sub(iRow, iCol, nRows, nCols);

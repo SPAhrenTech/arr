@@ -3,18 +3,18 @@
 #include <cstdlib>
 #include <math.h>
 
-#include "arr.hpp"
+#include "bool2.hpp"
+#include "bool2slice.hpp"
 
 namespace arr {
 
-//
-bool1::bool1(const bool2slice &A) : bool_arr1(A) {}
-bool2::bool2(const bool2slice &A) : bool_arr2(A) {}
+bool2slice::bool2slice(bool2 *A, const std::size_t iDim, const std::size_t iIndex):
+	bool_arr2slice(A, iDim, iIndex)
+{}
 
-//
-bool2slice bool2::slice(const std::size_t iDim, const std::size_t iIndex) { return bool2slice(this, iDim, iIndex); }
-bool2slice bool2::row(const std::size_t iIndex) { return bool2slice(this, 0, iIndex); }
-bool2slice bool2::col(const std::size_t iIndex) { return bool2slice(this, 1, iIndex); }
+bool2slice::bool2slice(const bool_arr2slice &A):
+	bool_arr2slice(A)
+{}
 
 //
 bool2 bool2slice::operator|(const bool2slice &A) const {
@@ -66,7 +66,6 @@ void bool2slice::operator=(const bool x) {
 			for (std::size_t i = 0; i < size(); i++)
 				data()->at(i, index()) = x;
 	}
-	//return *source();
 }
 
 }

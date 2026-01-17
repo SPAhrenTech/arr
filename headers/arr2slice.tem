@@ -4,7 +4,8 @@
 #include <math.h>
 #include <iostream>
 
-#include "arr2.hpp"
+#import "arr1.hpp"
+#import "arr2.hpp"
 
 namespace arr {
 
@@ -13,25 +14,22 @@ arr2slice<data_type>::arr2slice(arr2<data_type>* a,
 	const std::size_t iDim,
 	const std::size_t iIndex)
 {
-	m_a = a;
+	_a = a;
 	if (iDim < 2)
-		m_iDim = iDim;
+		_iDim = iDim;
 	else
-		m_iDim = 1;
-	if (iIndex < m_a->size(m_iDim))
-		m_iIndex = iIndex;
+		_iDim = 1;
+	if (iIndex < _a->size(_iDim))
+		_iIndex = iIndex;
 	else
-		m_iIndex = m_a->size(m_iDim) - 1;
+		_iIndex = _a->size(_iDim) - 1;
 }
 
-//
 template <class data_type>
 arr2slice<data_type>::arr2slice(const arr2slice<data_type>& A)
-	: arr2slice(A.data(), A.dim(), A.index())
-{
-}
+	: arr2slice(A._a,A._iDim,A._iIndex)
+{}
 
-//
 template <class data_type>
 arr2slice<data_type>::~arr2slice()
 {
@@ -45,7 +43,7 @@ arr2slice<data_type>::~arr2slice()
 template <class data_type>
 void arr2slice<data_type>::operator=(const arr2slice<data_type> A)
 {
-	if (m_iDim != A.dim())
+	if (_iDim != A.dim())
 		return;
 	std::size_t nA = size(), nB = size();
 	std::size_t n = nA;
@@ -70,32 +68,21 @@ void arr2slice<data_type>::operator=(const arr1<data_type>& A)
 template <class data_type>
 std::size_t arr2slice<data_type>::size() const
 {
-	return m_a->size(1 - m_iDim);
+	return _a->size(1 - _iDim);
 }
 
-//
 template <class data_type>
-data_type arr2slice<data_type>::at(const std::size_t i) const
+std::size_t arr2slice<data_type>::dim() const
 {
-	data_type x;
-	if (m_iDim == 0)
-		x = m_a->at(m_iIndex, i);
-	else
-		x = m_a->at(i, m_iIndex);
-	return x;
+	return _iDim;
 }
 
-//
 template <class data_type>
-data_type& arr2slice<data_type>::at(const std::size_t i)
+std::size_t arr2slice<data_type>::index() const
 {
-	if (m_iDim == 0) {
-		return m_a->at(m_iIndex, i);
-	}
-	return m_a->at(i, m_iIndex);
+	return _iIndex;
 }
-
-//
+	
 template <class data_type>
 arr2<data_type>::arr2(const arr2slice<data_type>& A)
 : arr2((A.dim() == 0) ? 1 : A.size(), (A.dim() == 1) ? 1 : A.size())
@@ -115,19 +102,40 @@ arr2<data_type>::arr2(const arr2slice<data_type>& A)
 	}
 }
 
-//
 template <class data_type>
-arr1<data_type>::arr1(const arr2slice<data_type>& A) : arr1<data_type>(A.size())
+data_type &arr2slice<data_type>::at(const std::size_t i)
 {
-	for (std::size_t i = 0; i < size(); i++)
-	at(i) = A(i);
+	return (_iDim==0) ? _a->at(_iIndex, i) : _a->at(i, _iIndex);
 }
 
-//
 template <class data_type>
-arr1<data_type>& arr1<data_type>::operator=(const arr2slice<data_type>& A)
+data_type const &arr2slice<data_type>::at(const std::size_t i) const
 {
-	return *this = arr1<data_type>(A);
+	return (_iDim==0) ? _a->at(_iIndex, i) : _a->at(i, _iIndex);
+}
+
+template <class data_type>
+data_type &arr2slice<data_type>::operator()(const std::size_t i)
+{
+ return at(i);
+}
+
+template <class data_type>
+data_type const &arr2slice<data_type>::operator()(const std::size_t i) const
+{
+ return at(i);
+}
+
+template <class data_type>
+arr2<data_type> *arr2slice<data_type>::data()
+{
+	return _a;
+}
+
+template <class data_type>
+arr2<data_type> const* arr2slice<data_type>::data() const
+{
+	return _a;
 }
 
 // friend

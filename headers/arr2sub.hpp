@@ -13,9 +13,9 @@ namespace arr {
     private:
 
     protected:
-        arr2<data_type> *m_a;
-        std::size_t m_iRow, m_iCol;
-        std::size_t m_nRows, m_nCols;
+        arr2<data_type> *_a;
+        std::size_t _iRow, _iCol;
+        std::size_t _nRows, _nCols;
 
     public:
         arr2sub(arr2<data_type> *a, const std::size_t iRow, const std::size_t iCol, const std::size_t nRows,
@@ -29,19 +29,18 @@ namespace arr {
 
         ~arr2sub();
 
-        arr2<data_type> *data() const { return m_a; }
+        std::size_t index(const std::size_t i) const;
 
-        std::size_t index(const std::size_t i) const { return (i == 0) ? m_iRow : m_iCol; }
-
-        std::size_t size(const std::size_t i) const { return (i == 0) ? m_nRows : m_nCols; }
+        std::size_t size(const std::size_t i) const;
 
         data_type &at(const std::size_t i, const std::size_t j);
+        data_type const &at(const std::size_t i, const std::size_t j) const;
 
-        data_type at(const std::size_t i, const std::size_t j) const;
+        data_type &operator()(const std::size_t i, const std::size_t j);
+        data_type const &operator()(const std::size_t i, const std::size_t j) const;
 
-        data_type &operator()(const std::size_t i, const std::size_t j) { return at(i, j); }
-
-        data_type operator()(const std::size_t i, const std::size_t j) const { return at(i, j); }
+				arr2<data_type> *data();
+       	arr2<data_type> const *data() const;
 
         void operator=(const data_type &x);
     };

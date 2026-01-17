@@ -3,59 +3,36 @@
 #include <cstdlib>
 #include <math.h>
 
-#include "arr.hpp"
 #include "mth.hpp"
 #include "trg.hpp"
+
+#include "dbl1.hpp"
+#include "dbl2.hpp"
+#include "dbl2slice.hpp"
+#include "dbl2sub.hpp"
+#include "uint2.hpp"
 
 namespace arr {
 
 bool dbl2::showOutput = false;
 const double tol = 1.e-14;
 
-//
+dbl2::dbl2(const std::size_t nRows,std::size_t nCols,const double* a)
+	: double_arr2(nRows, nCols, a) {}
+	
+dbl2::dbl2(const double_arr2& A) : double_arr2(A){}
+
+dbl2::dbl2(const dbl1& A) : double_arr2(A.size(),1,A.data()) {}
+
+dbl2::dbl2(const dbl2slice &A) : double_arr2(A) {}
+
 dbl2::dbl2(const uint2& A) : double_arr2(A.size(0), A.size(1))
 {
-    for (size_t i = 0; i < m_nRows; i++)
-        for (size_t j = 0; j < m_nCols; j++)
-            at(i, j) = A(i, j);
+	for (size_t i = 0; i < size(0); i++)
+		for (size_t j = 0; j < size(1); j++)
+			at(i, j) = A(i, j);
 }
 
-//
-dbl2 dbl2::operator+() const { return *this; }
-
-//
-dbl2 dbl2::operator-() const
-{
-    dbl2 res(*this);
-    for (size_t i = 0; i < m_nRows; i++)
-        for (size_t j = 0; j < m_nCols; j++)
-            res(i, j) *= -1;
-    return res;
-}
-
-//
-dbl2 dbl2::operator+(const dbl2& A) const
-{
-    dbl2 res(*this);
-    size_t i, j;
-    for (i = 0; i < size(0); ++i)
-        for (j = 0; j < size(1); ++j)
-            res(i, j) += A(i, j);
-    return res;
-}
-
-//
-dbl2 dbl2::operator-(const dbl2& A) const
-{
-    dbl2 res(*this);
-    size_t i, j;
-    for (i = 0; i < size(0); ++i)
-        for (j = 0; j < size(1); ++j)
-            res(i, j) -= A(i, j);
-    return res;
-}
-
-//
 dbl2 dbl2::operator+=(const dbl2& A) { return *this = *this + A; }
 
 dbl2 dbl2::operator-=(const dbl2& A) { return *this = *this - A; }
@@ -66,7 +43,8 @@ dbl2 dbl2::operator*=(double x) { return *this = x * (*this); }
 
 dbl2 dbl2::operator/=(double x) { return *this = (*this) / x; }
 
-//
+dbl2 dbl2::operator=(const double& x) { return double_arr2::operator=(x); }
+
 dbl1 dbl2::operator*(const dbl1& A) const
 {
     size_t i, j;
@@ -80,7 +58,14 @@ dbl1 dbl2::operator*(const dbl1& A) const
     return res;
 }
 
-//
+
+dbl2 dbl2::minor(const std::size_t m, const std::size_t n) const
+{
+	return double_arr2::minor(m, n);
+}
+
+dbl2 dbl2::T() const { return double_arr2::T(); }
+
 dbl2 dbl2::operator*(const dbl2& A) const
 {
     size_t i, j, k;
@@ -161,7 +146,6 @@ dbl1 dbl2::diag() const
     return res;
 }
 
-//
 dbl2 dbl1::diag() const
 {
     std::size_t m = size();
@@ -173,7 +157,6 @@ dbl2 dbl1::diag() const
     return res;
 }
 
-//
 double dbl2::trace() const
 {
     if (!isSquare())
@@ -185,7 +168,6 @@ double dbl2::trace() const
     return res;
 }
 
-//
 double dbl2::diagProd() const
 {
     if (!isSquare())
@@ -197,7 +179,6 @@ double dbl2::diagProd() const
     return res;
 }
 
-//
 dbl2 dbl2::pseudoInvLeft() const
 {
     dbl2 AT = T();
@@ -392,7 +373,6 @@ bool dbl2::PLU(dbl2& P, dbl2& L, dbl2& U) const
     return true;
 }
 
-//
 double dbl2::det() const
 {
     if (!isSquare()) {
@@ -407,7 +387,6 @@ double dbl2::det() const
     return A.diagProd();
 }
 
-//
 dbl2 operator*(const double x, const dbl2& A)
 {
     dbl2 res(A);
@@ -418,7 +397,6 @@ dbl2 operator*(const double x, const dbl2& A)
     return res;
 }
 
-//
 bool dbl2::isSquareSymm() const
 {
     if (!isSquare())
@@ -461,22 +439,20 @@ double dbl2::findAngle(const size_t i, const size_t j, double& ang) const
     return fabs(Apq); // reduction in off(A) is 2*(A_pq)^2
 }
 
-//
 double dbl2::sum() const
 {
     double tot = 0.;
-    for (size_t i = 0; i < m_nRows; i++)
-        for (size_t j = 0; j < m_nCols; j++)
+    for (size_t i = 0; i < _nRows; i++)
+        for (size_t j = 0; j < _nCols; j++)
             tot += at(i, j);
     return tot;
 }
 
-//
 double dbl2::sumSqr() const
 {
     double tot = 0.;
-    for (size_t i = 0; i < m_nRows; i++)
-        for (size_t j = 0; j < m_nCols; j++)
+    for (size_t i = 0; i < _nRows; i++)
+        for (size_t j = 0; j < _nCols; j++)
             tot += mth::sqr(at(i, j));
     return tot;
 }
@@ -485,8 +461,8 @@ double dbl2::sumSqr() const
 double dbl2::sumOffDiag() const
 {
     double tot = 0.;
-    for (size_t i = 0; i < m_nRows; i++)
-        for (size_t j = i + 1; j < m_nCols; j++)
+    for (size_t i = 0; i < _nRows; i++)
+        for (size_t j = i + 1; j < _nCols; j++)
             tot += at(i, j);
     return 2. * tot;
 }
@@ -544,21 +520,21 @@ dbl2 dbl2::Householder(const size_t iRow, const size_t jCol) const
 dbl2 dbl2::upperBidiag(dbl2& U, dbl2& V) const
 {
     dbl2 A(*this);
-    U = dbl2::ident(m_nRows, m_nRows);
-    V = dbl2::ident(m_nCols, m_nCols);
-    size_t n = std::max(m_nRows, m_nCols);
+    U = dbl2::ident(_nRows, _nRows);
+    V = dbl2::ident(_nCols, _nCols);
+    size_t n = std::max(_nRows, _nCols);
     for (size_t i = 0; i < n; i++) {
-        if (i < m_nRows) {
+        if (i < _nRows) {
             dbl2 Ui = A.Householder(i);
             A = Ui * A;
             U = U * Ui;
-            A(i + 1, i, m_nRows - i - 1, 1) = 0;
+            A(i + 1, i, _nRows - i - 1, 1) = 0;
         }
-        if (i < m_nCols - 1) {
+        if (i < _nCols - 1) {
             dbl2 Vi = A.T().Householder(i + 1, i);
             A = A * Vi.T();
             V = V * Vi;
-            A(i, i + 2, 1, m_nCols - i - 2) = 0.;
+            A(i, i + 2, 1, _nCols - i - 2) = 0.;
         }
     }
     return A;
@@ -570,14 +546,14 @@ dbl2 dbl2::tridiag(dbl2& P) const
 {
     if (!isSquare())
         return *this;
-    P = dbl2::ident(m_nRows, m_nRows);
+    P = dbl2::ident(_nRows, _nRows);
     dbl2 A(*this);
-    for (size_t i = 0; i < m_nRows - 1; i++) {
+    for (size_t i = 0; i < _nRows - 1; i++) {
         dbl2 Pp = A.Householder(i + 1, i);
         A = Pp * A * Pp.T();
         P = Pp * P;
-        A(i + 2, i, m_nRows - i - 2, 1) = 0;
-        A(i, i + 2, 1, m_nRows - i - 2) = 0.;
+        A(i + 2, i, _nRows - i - 2, 1) = 0;
+        A(i, i + 2, 1, _nRows - i - 2) = 0.;
     }
     return A;
 }
@@ -587,15 +563,15 @@ dbl2 dbl2::tridiag(dbl2& P) const
 dbl2 dbl2::upperTriang(dbl2& P) const
 {
     dbl2 A(*this);
-    double nRows = m_nRows - 1;
-    if (m_nRows > m_nCols)
-        nRows = m_nCols;
-    P = dbl2::ident(m_nRows, m_nRows);
+    double nRows = _nRows - 1;
+    if (_nRows > _nCols)
+        nRows = _nCols;
+    P = dbl2::ident(_nRows, _nRows);
     dbl2 R = A;
     for (size_t i = 0; i < nRows; i++) {
         dbl2 Pi = R.Householder(i);
         R = Pi * R; //*Pi.T();
-        R(i + 1, i, m_nCols - i - 1, 1) = 0.;
+        R(i + 1, i, _nCols - i - 1, 1) = 0.;
         P = Pi * P;
     }
     return R;
@@ -619,16 +595,16 @@ bool dbl2::diagSymm(dbl2& s, dbl2& V) const
     bool res = false;
     dbl2 A(*this);
     std::size_t nRot = 0;
-    V = dbl2::ident(m_nRows, m_nRows);
+    V = dbl2::ident(_nRows, _nRows);
 
-    long niter = 200 * m_nRows * (m_nRows + 1) / 2;
+    long niter = 200 * _nRows * (_nRows + 1) / 2;
     bool found = false;
     for (long iter = 0; iter < niter; iter++) {
         double aMax = 0.;
         size_t k = 0, l = 0;
         found = false;
-        for (size_t ip = 0; ip < m_nRows; ip++)
-            for (size_t iq = ip + 1; iq < m_nRows; iq++)
+        for (size_t ip = 0; ip < _nRows; ip++)
+            for (size_t iq = ip + 1; iq < _nRows; iq++)
                 if (fabs(A(ip, iq)) > aMax) {
                     aMax = fabs(A(ip, iq));
                     k = ip;
@@ -657,7 +633,7 @@ bool dbl2::diagSymm(dbl2& s, dbl2& V) const
     }
 
     dbl1 sv = A.diag();
-    for (size_t ip = 0; ip < m_nRows; ++ip)
+    for (size_t ip = 0; ip < _nRows; ++ip)
         for (size_t iq = 0; iq < ip; iq++)
             if (sv(ip) > sv(iq)) // sort eigenvalues
             {
@@ -692,9 +668,9 @@ bool dbl2::SVD(dbl2& U, dbl2& S, dbl2& V) const
     dbl2 A(*this);
     upperBidiag(U, V); // Don't need B
 
-    long nIter = 100 * std::max(m_nRows, m_nCols);
+    long nIter = 100 * std::max(_nRows, _nCols);
     for (long iIter = 0; iIter < nIter; iIter++) {
-        for (size_t j = 0; j < m_nCols - 1; j++) {
+        for (size_t j = 0; j < _nCols - 1; j++) {
             dbl2 Sp = U.T() * A * V;
             double x = Sp(j, j);
             double y = Sp(j, j + 1);
@@ -703,7 +679,7 @@ bool dbl2::SVD(dbl2& U, dbl2& S, dbl2& V) const
                 V.rotR(j, j + 1, ang);
             }
         }
-        for (size_t i = 0; i < m_nRows - 1; i++) {
+        for (size_t i = 0; i < _nRows - 1; i++) {
             dbl2 Sp = U.T() * A * V;
             double x = Sp(i, i);
             double y = Sp(i + 1, i);
@@ -731,8 +707,8 @@ bool dbl2::SVD(dbl2& U, dbl2& S, dbl2& V) const
             }
 
     S = U.T() * A * V;
-    for (size_t i = 0; i < m_nRows; i++)
-        for (size_t j = 0; j < m_nCols; j++)
+    for (size_t i = 0; i < _nRows; i++)
+        for (size_t j = 0; j < _nCols; j++)
             if (i != j) {
                 if (fabs(S(i, j)) < tol)
                     S(i, j) = 0.;
@@ -747,7 +723,7 @@ bool dbl2::SVD(dbl2& U, dbl2& S, dbl2& V) const
 bool dbl2::SVDred(dbl2& U, dbl2& S, dbl2& V, double fac) const
 {
     bool res = SVD(U, S, V);
-    size_t n = std::min(m_nRows, m_nCols);
+    size_t n = std::min(_nRows, _nCols);
 
     double sMax = S(0, 0);
     size_t nRed = 1;
@@ -757,9 +733,9 @@ bool dbl2::SVDred(dbl2& U, dbl2& S, dbl2& V, double fac) const
         else
             break;
 
-    U = U(0, 0, m_nRows, nRed);
+    U = U(0, 0, _nRows, nRed);
     S = S(0, 0, nRed, nRed);
-    V = V(0, 0, m_nCols, nRed);
+    V = V(0, 0, _nCols, nRed);
     return res;
 }
 
@@ -809,7 +785,7 @@ dbl2 dbl2::rot(const size_t iRow, const size_t jCol, double ang, size_t n)
 void dbl2::rotR(const size_t iCol, const size_t jCol, double ang)
 {
     double c = cos(ang), s = sin(ang);
-    for (size_t k = 0; k < m_nRows; k++) {
+    for (size_t k = 0; k < _nRows; k++) {
         double Aki = at(k, iCol);
         double Akj = at(k, jCol);
         at(k, iCol) = c * Aki + s * Akj;
@@ -817,13 +793,13 @@ void dbl2::rotR(const size_t iCol, const size_t jCol, double ang)
     }
 }
 
-// Multiplies *this by rotation matrix from left affecting rows iRow and
-// jRow
+// Multiplies *this by rotation matrix from left affecting
+// rows iRow and jRow
 void dbl2::rotL(const size_t iRow, const size_t jRow, double ang)
 {
     // cout<<"init:\n"<<*this<<"\n";
     double c = cos(ang), s = sin(ang);
-    for (size_t k = 0; k < m_nCols; k++) {
+    for (size_t k = 0; k < _nCols; k++) {
         double Aik = at(iRow, k);
         double Ajk = at(jRow, k);
         at(iRow, k) = c * Aik + s * Ajk;
@@ -834,7 +810,7 @@ void dbl2::rotL(const size_t iRow, const size_t jRow, double ang)
 //
 dbl2 dbl1::operator*(const dbl2& A) const
 {
-    std::size_t nRows = m_n, nCols = A.size(1);
+    std::size_t nRows = size(), nCols = A.size(1);
     dbl2 res(nRows, nCols);
     if (A.size(0) != 1)
         return res;
@@ -847,9 +823,9 @@ dbl2 dbl1::operator*(const dbl2& A) const
 //
 dbl2 dbl2::pwr(const double x) const
 {
-    dbl2 A(m_nRows, m_nCols);
-    for (size_t i = 0; i < m_nRows; i++)
-        for (size_t j = 0; j < m_nCols; j++)
+    dbl2 A(_nRows, _nCols);
+    for (size_t i = 0; i < _nRows; i++)
+        for (size_t j = 0; j < _nCols; j++)
             A(i, j) = pow(at(i, j), x);
     return A;
 }
@@ -858,11 +834,11 @@ dbl2 dbl2::pwr(const double x) const
 dbl2 dbl2::rowEschelon() const
 {
     dbl2 A(*this);
-    for (size_t i = 0; i < m_nRows; i++) {
+    for (size_t i = 0; i < _nRows; i++) {
         // Find row with valid pivot
         size_t k = i;
         bool found = false;
-        while ((k < m_nRows) && (!found)) {
+        while ((k < _nRows) && (!found)) {
             if (A(k, i) == 0.)
                 k++;
             else
@@ -877,7 +853,7 @@ dbl2 dbl2::rowEschelon() const
         if (pivot != 0.) {
             A.row(i) /= pivot;
 
-            for (size_t k = 0; k < m_nRows; k++) {
+            for (size_t k = 0; k < _nRows; k++) {
                 if (k != i) {
                     double fac = A(k, i);
                     A.row(k) -= fac * A.row(i);
@@ -987,5 +963,28 @@ dbl2 dbl2::nullspace() const
 
 dbl2 dbl2::sqr() const { return pwr(2.); }
 dbl2 dbl2::sqrt() const { return pwr(0.5); }
+dbl2 dbl2::zero() { return *this = dbl2::zero(_nRows, _nCols); }
+dbl2 dbl2::ident() { return *this = dbl2::ident(_nRows, _nCols); }
 
+dbl2 dbl2::operator+() const { return *this; }
+dbl2 dbl2::operator-() const { return -1.*(*this); }
+dbl2 dbl2::operator+(const dbl2 &A) const { return *this + A; }
+dbl2 dbl2::operator-(const dbl2 &A) const { return *this - A; }
+
+dbl2slice dbl2::slice(const std::size_t iDim, const std::size_t iIndex) { return {this, iDim, iIndex}; }
+dbl2slice dbl2::row(const std::size_t iIndex) { return {this, 0, iIndex}; }
+dbl2slice dbl2::col(const std::size_t iIndex) { return {this, 1, iIndex}; }
+
+dbl2::dbl2(const dbl2sub &A):double_arr2(A){}
+
+dbl2sub dbl2::sub(const std::size_t iRow,const std::size_t iCol,const std::size_t nRows,const std::size_t nCols)
+{
+	return double_arr2::sub(iRow,iCol,nRows,nCols);
+}
+
+//
+dbl2sub dbl2::operator()(const std::size_t iRow,const std::size_t iCol,const std::size_t nRows,const std::size_t nCols)
+{
+	return sub(iRow,iCol,nRows,nCols);
+}
 } // namespace arr

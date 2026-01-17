@@ -8,7 +8,6 @@ Arrays: Rank 2- P. Ahrenkiel
 #include "arr2.hpp"
 #include "cpx.hpp"
 
-
 namespace arr {
 
 class cpx1;

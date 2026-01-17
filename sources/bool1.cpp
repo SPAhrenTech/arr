@@ -3,11 +3,19 @@
 #include <cstdlib>
 #include <math.h>
 
-#include "arr.hpp"
+#include "bool1.hpp"
+#include "bool2slice.hpp"
 
 namespace arr {
 
-//
+bool1::bool1(const std::size_t N0, const bool *b):
+	bool_arr1(N0, reinterpret_cast<const bool_type*>(b))
+{}
+
+bool1::bool1(const bool_arr1 &A) : bool_arr1(A()) {}
+	
+bool1::bool1(const bool2slice &A) : bool_arr1(A) {}
+
 bool1 bool1::zero(const std::size_t n) {
 		bool1 res(n);
 		res = false;
@@ -16,8 +24,8 @@ bool1 bool1::zero(const std::size_t n) {
 
 //
 bool1 bool1::operator|(const bool1 &b) const {
-		size_t n = std::min(m_n, b.size());
-		bool1 res = (m_n < b.size()) ? b : *this;
+		size_t n = std::min(size(), b.size());
+		bool1 res = (size() < b.size()) ? b : *this;
 		for (size_t i = 0; i < n; i++)
 				res(i) = at(i) || b(i);
 		return res;
@@ -25,8 +33,8 @@ bool1 bool1::operator|(const bool1 &b) const {
 
 //
 bool1 bool1::operator&(const bool1 &b) const {
-		size_t n = std::min(m_n, b.size());
-		bool1 res = (m_n > b.size()) ? b : *this;
+		size_t n = std::min(size(), b.size());
+		bool1 res = (size() > b.size()) ? b : *this;
 		for (size_t i = 0; i < n; i++)
 				res(i) = at(i) && b(i);
 		return res;

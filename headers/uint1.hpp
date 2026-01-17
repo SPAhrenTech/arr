@@ -9,6 +9,8 @@
 
 namespace arr {
 
+class dbl1;
+
 typedef unsigned int uint;
 typedef arr1<uint> uint_arr1;
 
@@ -19,7 +21,7 @@ public:
 	uint1(const std::size_t n = 0, const uint *a = NULL) : uint_arr1(n, a) {}
 	uint1(const uint_arr1 &A);
 	uint1(const dbl1 &A);
-	uint1 operator=(const uint &x) { return uint_arr1::operator=(x); }
+	uint1 operator=(const uint &x);
 };
 
 }

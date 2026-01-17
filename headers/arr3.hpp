@@ -10,11 +10,13 @@
 namespace arr {
 //
 template <class data_type>
-class arr3 {
+class arr3
+{
 private:
+
 protected:
-	data_type* m_a;
-	std::size_t m_n0, m_n1, m_n2;
+	std::vector<data_type> _v;
+	std::size_t _n0, _n1, _n2;
 
 public:
 	arr3(const std::size_t n0 = 0,
@@ -29,12 +31,9 @@ public:
 
 	arr3<data_type>& operator=(const arr3<data_type>& A);
 
-	data_type* source() const { return m_a; }
+	std::vector<data_type> operator()() const;
 
-	std::vector<data_type> vect();
-
-	std::size_t size() const { return m_n0 * m_n1 * m_n2; }
-
+	std::size_t size() const;
 	std::size_t size(std::size_t d) const;
 
 	void resize(const size_t n0, const size_t n1, const size_t n2);
@@ -43,21 +42,16 @@ public:
 
 	bool operator!=(const arr3<data_type>& A) const;
 
-	bool isCube() const { return (m_n0 == m_n0) && (m_n0 == m_n1); }
-
+	bool isCube() const;
+	
 	data_type& at(const std::size_t i0, const std::size_t i1, const std::size_t i2);
-
 	data_type const& at(const std::size_t i0, const std::size_t i1, const std::size_t i2) const;
 
-	data_type& operator()(const std::size_t i, const std::size_t j, const std::size_t k)
-	{
-			return at(i, j, k);
-	}
-
-	data_type const& operator()(const std::size_t i, const std::size_t j, const std::size_t k) const
-	{
-			return at(i, j, k);
-	}
+	data_type& operator()(const std::size_t i, const std::size_t j, const std::size_t k);
+	data_type const& operator()(const std::size_t i, const std::size_t j, const std::size_t k) const;
+	
+	data_type* data();
+	data_type const* data() const;
 };
 
 } // namespace arr

@@ -3,16 +3,31 @@
 #include <cstdlib>
 #include <math.h>
 
-#include "arr.hpp"
 #include "mth.hpp"
 #include "trg.hpp"
 
+#include "dbl1.hpp"
+#include "dbl2slice.hpp"
+
 namespace arr {
 
-//
+dbl1::dbl1(const std::size_t n,const double* ap):
+	double_arr1(n, ap)
+{
+}
+	
+dbl1::dbl1(const double_arr1& A):
+	double_arr1(A.size(), A.data())
+{
+}
+
+dbl1 dbl1::operator=(const double& x)
+{
+	return double_arr1::operator=(x);
+}
+
 dbl1 dbl1::operator+() const { return *this; }
 
-//
 dbl1 dbl1::operator-() const
 {
     dbl1 res(*this);
@@ -138,5 +153,7 @@ dbl1 dbl1::sqrt() const { return pwr(0.5); }
 dbl1 sqr(const dbl1& A) { return A.sqr(); }
 
 dbl1 sqrt(const dbl1& A) { return A.sqrt(); }
+
+dbl1::dbl1(const dbl2slice &A) : double_arr1(A) {}
 
 } // namespace arr

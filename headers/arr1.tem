@@ -1,93 +1,60 @@
 // arrays (n) - P. Ahrenkiel
 
-#include <cstdlib>
-#include <iostream>
 #include <math.h>
 
 #include "error.hpp"
+#include "arr2slice.hpp"
 
 namespace arr {
-//
+
 template <class data_type>
-arr1<data_type>::arr1(const size_t n, const data_type* a) : m_n(n)
+arr1<data_type>::arr1(const size_t n, const data_type* p):
+	_v(n)
 {
-    m_a = new data_type[m_n];
-    if ((m_a != nullptr) && (a != nullptr))
-        for (std::size_t i = 0; i < size(); i++)
-            m_a[i] = a[i];
+	if(p)
+   	_v.assign(p,p+n);
 }
 
-//
 template <class data_type>
-arr1<data_type>::arr1(const arr1<data_type>& A) : arr1(A.size())
+arr1<data_type>::arr1(const std::vector<data_type>& A):_v(A)
 {
-    for (std::size_t i = 0; i < m_n; i++)
-        m_a[i] = A(i);
 }
 
-//
+
+template <class data_type>
+arr1<data_type>::arr1(const arr1<data_type>& A)
+{
+    _v=A._v;
+}
+
 template <class data_type>
 arr1<data_type>& arr1<data_type>::operator=(const arr1<data_type>& A)
 {
-    delete [] m_a;
-    m_a = new data_type[A.m_n];
-    if (m_a != nullptr) {
-        m_n = A.m_n;
-        for (std::size_t i = 0; i < A.m_n; i++)
-            m_a[i] = A(i);
-    }
-    return *this;
+    _v=A._v;
 }
 
-//
 template <class data_type>
 arr1<data_type> arr1<data_type>::reverse()
 {
-    arr1<data_type> rA(size());
-    for (std::size_t i = 0; i < m_n; i++)
-        rA.m_a[m_n - i - 1] = m_a[i];
-    return rA;
+	return std::vector<double>(_v.rbegin(),_v.rend());
 }
 
-//
-template <class data_type>
-void arr1<data_type>::clear()
-{
-    delete [] m_a;
-    m_a = nullptr;
-    m_n = 0;
-}
-
-//
 template <class data_type>
 void arr1<data_type>::resize(const std::size_t n)
 {
-    arr1<data_type> b(*this);
-    delete [] m_a;
-    m_a = new data_type[n];
-    if (m_a != nullptr) {
-        m_n = n;
-        for (std::size_t i = 0; i < b.size(); ++i)
-            if (i < size())
-                m_a[i] = b.m_a[i];
-    }
+    _v.resize(n);
 }
 
-//
 template <class data_type>
-void arr1<data_type>::append(const data_type ai)
+void arr1<data_type>::append(const data_type x)
 {
-    resize(m_n + 1);
-    m_a[m_n - 1] = ai;
+    _v.push_back(x);
 }
 
-//
+
 template <class data_type>
 arr1<data_type>::~arr1()
 {
-    delete [] m_a;
-    m_a = nullptr;
-    m_n = 0;
 }
 
 //
@@ -95,89 +62,99 @@ template <class data_type>
 bool arr1<data_type>::operator==(const arr1<data_type>& A) const
 {
     bool res = true;
-    if (A.size() != m_n) {
+    if (A.size() != size()) {
         return false;
     }
-    for (std::size_t i = 0; i < m_n; ++i)
-        res = res & (m_a[i] == A(i));
+    for(std::size_t i = 0; i < size(); ++i)
+        res = res & (_v[i] == A(i));
     return res;
 }
 
-//
 template <class data_type>
 arr1<data_type> arr1<data_type>::operator=(const data_type& x)
 {
-    for (std::size_t i = 0; i < size(); ++i)
-        at(i) = x;
+    for(std::size_t i = 0; i < size(); ++i)
+   		at(i) = x;
     return *this;
 }
 
-//
 template <class data_type>
 bool arr1<data_type>::operator!=(const arr1& A) const
 {
     return !((*this) == A);
 }
 
-//
 template <class data_type>
 data_type& arr1<data_type>::at(const std::size_t i)
 {
-    if (i >= size())
-        err = 1;
-    return m_a[i];
+    return _v[i];
 }
 
-//
 template <class data_type>
 data_type const& arr1<data_type>::at(const std::size_t i) const
 {
-    if (i >= size())
-        err = 1;
-    return m_a[i];
+	return _v[i];
 }
 
-//
+template <class data_type>
+data_type& arr1<data_type>::operator()(const std::size_t i)
+{
+	return at(i);
+}
+
+template <class data_type>
+data_type const& arr1<data_type>::operator()(const std::size_t i) const
+{
+	return at(i);
+}
+
+template <class data_type>
+data_type* arr1<data_type>::data()
+{
+	return _v.data();
+}
+
+template <class data_type>
+data_type const* arr1<data_type>::data() const
+{
+	return _v.data();
+}
+
+
 template <class data_type>
 void arr1<data_type>::copy(data_type* a) const
 {
-    for (std::size_t i = 0; i < m_n; ++i)
-        a[i] = m_a[i];
+	for(auto &x:*this)
+	{
+		*a=x;
+		++a;
+	}
 }
 
-//
 template <class data_type>
 arr1<std::size_t> arr1<data_type>::iindex() const
 {
     arr1<data_type> res(size());
-    for (std::size_t i = 0; i < m_n; ++i)
+    for (std::size_t i = 0; i < _v.size(); ++i)
         res(i) = i;
     return res;
 }
 
-//
 template <class data_type>
 arr1<data_type> arr1<data_type>::operator()(const arr1<std::size_t> A)
 {
     std::size_t m = A.size();
     arr1<data_type> res(m);
     for (std::size_t i = 0; i < m; ++i)
-        res(i) = m_a[A(i)];
+        res(i) = _v[A(i)];
 }
 
-//
 template <class data_type>
 std::vector<data_type> arr1<data_type>::operator()() const
 {
-    std::vector<data_type> v(m_n);
-    for (std::size_t i = 0; i < m_n; ++i) {
-        data_type x = m_a[i];
-        v[i] = x;
-    }
-    return v;
+    return _v;
 }
 
-//
 template <class data_type>
 std::ostream& operator<<(std::ostream& os, const arr1<data_type>& A)
 {
@@ -190,4 +167,42 @@ std::ostream& operator<<(std::ostream& os, const arr1<data_type>& A)
     os << ")";
     return os;
 }
+
+template <class data_type>
+void arr1<data_type>::clear()
+{
+	_v.clear();
+}
+
+template <class data_type>
+std::size_t arr1<data_type>::size() const
+{
+	return _v.size();
+}
+
+template <class data_type>
+data_type& arr1<data_type>::cyc(const std::size_t i)
+{
+	return (*this)(i % size());
+}
+
+template <class data_type>
+data_type const& arr1<data_type>::cyc(const std::size_t i) const
+{
+	return (*this)(i & size());
+}
+
+template <class data_type>
+arr1<data_type>::arr1(const arr2slice<data_type>& A):arr1<data_type>(A.size())
+{
+	for (std::size_t i = 0; i < size(); i++)
+	at(i) = A(i);
+}
+
+template <class data_type>
+arr1<data_type>& arr1<data_type>::operator=(const arr2slice<data_type>& A)
+{
+	return *this = arr1<data_type>(A);
+}
+
 } // namespace arr
