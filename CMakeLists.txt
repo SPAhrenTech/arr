@@ -22,6 +22,7 @@ if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
 else()
     set(modules_dir "${CMAKE_SOURCE_DIR}/")
 endif()
+
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/headers
     ${modules_dir}tlbx ${modules_dir}tlbx/headers)
