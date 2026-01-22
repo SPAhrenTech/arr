@@ -28,6 +28,9 @@ arr1<data_type>::arr1(const arr1<data_type>& A)
 }
 
 template <class data_type>
+arr1<data_type>::arr1(std::initializer_list<data_type> A):arr1(std::vector(A)){}
+	
+template <class data_type>
 arr1<data_type>& arr1<data_type>::operator=(const arr1<data_type>& A)
 {
     _v=A._v;

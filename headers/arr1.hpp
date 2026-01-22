@@ -26,7 +26,7 @@ public:
 	
 	arr1(const arr1<data_type>& A); // copy constructor
 	arr1(const std::vector<data_type>& A);
-	arr1(std::initializer_list<data_type> A):arr1(std::vector(A)){}
+	arr1(std::initializer_list<data_type> A);
 	arr1(const arr2slice<data_type>& A);
 	~arr1();
 		
