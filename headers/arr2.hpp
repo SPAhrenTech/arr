@@ -17,12 +17,11 @@ template <class data_type>
 class arr2sub;
 
 template <class data_type>
-class arr2:protected std::vector<data_type>
+class arr2
 {
 private:
 
 protected:
-	//data_type *m_v;
 	std::vector<data_type> _v;
 	std::size_t _nRows,_nCols;
 
@@ -30,7 +29,7 @@ public:
 	arr2(const std::size_t nRows=0,const std::size_t nCols=0,const data_type* p=NULL);
 	arr2(const std::size_t nRows,const std::size_t nCols,const std::vector<data_type> &v);
 	arr2(const arr1<data_type>& A);
-	arr2(std::initializer_list<std::initializer_list<data_type>> A);
+	arr2(const std::initializer_list<std::initializer_list<data_type>> A);
 	arr2(const arr2<data_type>& A); // copy constructor
 	arr2(const arr2slice<data_type>& A);
 	arr2(const arr2sub<data_type>& A);
