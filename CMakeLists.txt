@@ -18,7 +18,7 @@ source_group("sources" FILES ${cpp_sources})
 source_group("" FILES ${PROJECT_NAME}.hpp)
 
 # Configure .tem files to be treated as C++ files
-file(GLOB tem_files headers/*.tem)
+file(GLOB tem_files CONFIGURE_DEPENDS headers/*.tem)
 #set_source_files_properties(${tem_files} PROPERTIES LANGUAGE CXX)
 
 add_library(${PROJECT_NAME} STATIC ${cpp_srcs})

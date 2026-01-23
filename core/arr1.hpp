@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
+#include <initializer_list>
 
 namespace arr {
 
