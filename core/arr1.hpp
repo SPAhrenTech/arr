@@ -63,54 +63,6 @@ public:
 	arr1<std::size_t> iindex() const;
 	
 	arr1<data_type> reverse();
-	
-/*
-	class iterator {
-		data_type* ap;
-		
-	public:
-		iterator(data_type* p) : ap(p) {}
-		
-		iterator operator++()
-		{
-			iterator i = *this;
-			ap++;
-			return i;
-		}
-		
-		iterator operator++(int) { return iterator(ap++); }
-		
-		iterator operator--()
-		{
-			iterator i = *this;
-			ap--;
-			return i;
-		}
-		
-		iterator operator--(int) { return iterator(ap--); }
-		iterator operator+(int n) const { return iterator(ap + n); }
-		iterator operator-(int n) const { return iterator(ap - n); }
-		
-		iterator& operator+=(int n)
-		{
-			ap += n;
-			return *this;
-		}
-		
-		iterator& operator-=(int n)
-		{
-			ap -= n;
-			return *this;
-		}
-		
-		bool operator!=(const iterator& b) const { return ap != b.ap; }
-		
-		data_type& operator*() { return *ap; }
-	};
-	
-	iterator begin() { return iterator(_v.begin()); }
-	iterator end() { return iterator(_v.end()); }
-*/
 };
 
 template <class data_type>

@@ -1,13 +1,19 @@
 cmake_minimum_required(VERSION 3.10) # required
 
 project(arr)  # project name
-		
-file(GLOB_RECURSE cpp_headers headers/*.hpp headers/*.tem)
+	
+file(GLOB_RECURSE core_headers core/*.hpp)
+file(GLOB_RECURSE core_templates core/*.tem)
+file(GLOB_RECURSE cpp_headers headers/*.hpp)
+file(GLOB_RECURSE cpp_templates headers/*.tem)
 file(GLOB_RECURSE cpp_sources sources/*.cpp)
-set(cpp_srcs ${PROJECT_NAME}.hpp ${cpp_headers} ${cpp_sources})
+set(cpp_srcs ${PROJECT_NAME}.hpp ${core_headers} ${core_templates} ${cpp_headers} ${cpp_templates} ${cpp_sources})
 
 # Organize files into groups for Xcode/Visual Studio
+source_group("core" FILES ${core_headers})
+source_group("core/templates" FILES ${core_templates})
 source_group("headers" FILES ${cpp_headers})
+source_group("templates" FILES ${cpp_templates})
 source_group("sources" FILES ${cpp_sources})
 source_group("" FILES ${PROJECT_NAME}.hpp)
 
