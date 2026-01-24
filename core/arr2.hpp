@@ -3,6 +3,7 @@
 #ifndef _ARR2_
 #define _ARR2_
 
+#include <initializer_list>
 #include <vector>
 
 namespace arr {

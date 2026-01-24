@@ -8,6 +8,7 @@
 
 #include "dbl1.hpp"
 #include "dbl2slice.hpp"
+#include "error.hpp"
 
 namespace arr {
 

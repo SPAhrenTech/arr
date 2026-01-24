@@ -1,11 +1,5 @@
 // arrays (m x n) - P. Ahrenkiel
 
-#include <cstdlib>
-#include <math.h>
-#include <iostream>
-
-#include "error.hpp"
-
 namespace arr {
 
 template <class data_type>
@@ -152,11 +146,7 @@ arr1<data_type> arr2<data_type>::operator()(const std::size_t j) const
 {
     std::size_t nRows = _nRows;
     arr1<data_type> res(nRows);
-    if (j > _nCols) {
-        err = -1;
-        return res;
-    }
-    for (std::size_t i = 0; i < nRows; i++)
+		for (std::size_t i = 0; i < nRows; i++)
         res(i) = at(i, j);
     return res;
 }

@@ -1,10 +1,5 @@
 // arrays (n) - P. Ahrenkiel
 
-#include <math.h>
-
-#include "error.hpp"
-#include "arr2slice.hpp"
-
 namespace arr {
 
 template <class data_type>

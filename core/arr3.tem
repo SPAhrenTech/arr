@@ -1,14 +1,9 @@
-// arrays (m x n) - P. Ahrenkiel
-
-#include <cstdlib>
-#include <math.h>
-#include <iostream>
+// arrays (l x m x n) - P. Ahrenkiel
 
 #include "arr1.hpp"
 #include "arr2.hpp"
 #include "arr2sub.hpp"
 #include "arr2slice.hpp"
-#include "error.hpp"
 
 namespace arr {
 

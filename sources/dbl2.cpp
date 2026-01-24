@@ -11,6 +11,7 @@
 #include "dbl2slice.hpp"
 #include "dbl2sub.hpp"
 #include "uint2.hpp"
+#include "error.hpp"
 
 namespace arr {
 

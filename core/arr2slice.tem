@@ -1,9 +1,5 @@
 // array slices (n) - P. Ahrenkiel
 
-#include <cstdlib>
-#include <math.h>
-#include <iostream>
-
 #include "arr1.hpp"
 #include "arr2.hpp"
 

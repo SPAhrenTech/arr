@@ -6,6 +6,7 @@ Complex 1-D Arrays - P. Ahrenkiel
 
 #include "cpx1.hpp"
 #include "dbl1.hpp"
+#include "error.hpp"
 
 namespace arr {
 

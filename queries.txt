@@ -44,3 +44,14 @@ How can I tell github actions to initalize the submodule "tlbx" before calling "
 Can I determine if 
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME} OR NOT TARGET tlbx)
 is TRUE before initializing the submodule "tlbx"?
+
+Can you fix this error that occurs during the "Build" job when I push to the remote? It seems to be building for Ubuntu.
+Building CXX object CMakeFiles/arr.dir/sources/bool1.cpp.o
+In file included from /home/runner/work/arr/arr/core/arr1.tem:6,
+                 from /home/runner/work/arr/arr/core/arr1.hpp:74,
+                 from /home/runner/work/arr/arr/headers/bool1.hpp:8,
+                 from /home/runner/work/arr/arr/sources/bool1.cpp:6:
+/home/runner/work/arr/arr/core/arr2slice.hpp:45:88: warning: friend declaration ‘std::ostream& arr::operator<<(std::ostream&, const arr2slice<data_type>&)’ declares a non-template function [-Wnon-template-friend]
+   45 |         friend std::ostream &operator<<(std::ostream &os, const arr2slice<data_type> &A);
+      |                                                                                        ^
+/home/runner/work/arr/arr/core/arr2slice.hpp:45:88: note: (if this is not what you intended, make sure the function template has already been declared and add ‘<>’ after the function name here)

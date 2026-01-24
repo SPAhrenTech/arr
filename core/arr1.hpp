@@ -3,8 +3,6 @@
 #ifndef _ARR1_
 #define _ARR1_
 
-#include <iterator> // Provides iterator and forward_iterator_tag
-#include <cstdio>
 #include <iostream>
 #include <vector>
 #include <initializer_list>
