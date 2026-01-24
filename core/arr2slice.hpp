@@ -3,6 +3,8 @@
 #ifndef _ARR2SLICE_
 #define _ARR2SLICE_
 
+#include <iostream>
+
 namespace arr {
 
 template<class data_type>
@@ -10,6 +12,13 @@ class arr1;
 
 template<class data_type>
 class arr2;
+
+template<class data_type>
+class arr2slice;
+
+// Forward declare the operator<< template function
+template<class data_type>
+std::ostream &operator<<(std::ostream &os, const arr2slice<data_type> &A);
 
 template<class data_type>
 class arr2slice {
@@ -42,7 +51,7 @@ public:
 	
 	std::size_t size() const;
 
-	friend std::ostream &operator<<(std::ostream &os, const arr2slice<data_type> &A);
+	friend std::ostream &operator<< <>(std::ostream &os, const arr2slice<data_type> &A);
 };
 }
 

@@ -34,6 +34,7 @@ template <class data_type>
 arr1<data_type>& arr1<data_type>::operator=(const arr1<data_type>& A)
 {
     _v=A._v;
+    return *this;
 }
 
 template <class data_type>
