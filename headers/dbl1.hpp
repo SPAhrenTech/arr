@@ -11,7 +11,6 @@ namespace arr {
 
 class dbl2;
 class dbl2slice;
-class uiarr1;
 
 typedef arr1<double> double_arr1;
 
